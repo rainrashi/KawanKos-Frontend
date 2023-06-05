@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Shadows Into Light Two
+- Font Author: Copyright (c) 2012, Kimberly Geswein.
+- Font Source: http://fonts.gstatic.com/s/shadowsintolighttwo/v13/4iC86LVlZsRSjQhpWGedwyOoW-0A6_kpsyNmlAvNGLNnIF0.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
