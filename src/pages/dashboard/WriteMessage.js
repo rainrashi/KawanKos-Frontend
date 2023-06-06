@@ -80,11 +80,11 @@ const WriteMessage = () => {
 		}
 	}, [messageSent, navigate])
 
-	console.log(isReplying)
-	console.log(messageTitle)
-	console.log(messageFrom)
-	console.log(messageTo)
-	console.log(messageRecipientProfile)
+	// console.log(isReplying)
+	// console.log(messageTitle)
+	// console.log(messageFrom)
+	// console.log(messageTo)
+	// console.log(messageRecipientProfile)
 
 	return (
 		<Wrapper>

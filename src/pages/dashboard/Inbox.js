@@ -77,7 +77,7 @@ const Inbox = () => {
 											Buka
 										</Link>
 										{'  '}
-										<button className="btn btn-danger">Hapus</button>
+										{/* <button className="btn btn-danger">Hapus</button> */}
 									</td>
 								</tr>
 							)
