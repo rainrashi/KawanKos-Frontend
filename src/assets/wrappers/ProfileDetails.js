@@ -30,6 +30,14 @@ const Wrapper = styled.section`
 		margin-right: auto;
 		border-radius: 50%;
 	}
+	.img-preview {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		margin-left: auto;
+		margin-right: auto;
+		/* border-radius: 50%; */
+	}
 	h3 {
 		margin-top: 0;
 	}

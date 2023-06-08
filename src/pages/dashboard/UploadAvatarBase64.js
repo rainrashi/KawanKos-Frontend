@@ -60,7 +60,13 @@ const UploadAvatarBase64 = () => {
 					{/* keep it as preview */}
 					<img
 						className='img img-preview'
-						src={basedAvatar ? basedAvatar : userAvatar}
+						src={
+							basedAvatar
+								? basedAvatar
+								: userAvatar === 'defaultAvatar'
+								? defaultAvatar
+								: userAvatar
+						}
 					/>
 				</>
 			) : (

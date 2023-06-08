@@ -8,6 +8,7 @@ import {
 } from '../../components'
 import { useAppContext } from '../../context/appContext'
 import Wrapper from '../../assets/wrappers/DashboardFormPage'
+import dangerImg from '../../assets/images/danger.svg'
 import { Link } from 'react-router-dom'
 import defaultAvatar from '../../assets/images/defaultAvatar_rekmld.jpg'
 import { AiFillPicture } from 'react-icons/ai'
@@ -59,7 +60,14 @@ const Profile = () => {
 		userLocationPrice: user?.userLocationPrice,
 	})
 
-	const [avatar, setAvatar] = useState(user?.userAvatar)
+	// const [avatar, setAvatar] = useState(user?.userAvatar)
+	const [foundButton, setFoundButton] = useState(false)
+
+	const toggleFoundButton = (e) => {
+		e.preventDefault()
+		const prev = foundButton
+		setFoundButton(!prev)
+	}
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
@@ -79,6 +87,7 @@ const Profile = () => {
 			userFoundPartner: !prevFormData.userFoundPartner,
 		}))
 		updateUserFoundPartner({ userFoundPartner: !formData.userFoundPartner })
+		toggleFoundButton(e)
 	}
 
 	const toggleHasLocation = (e) => {
@@ -235,6 +244,7 @@ const Profile = () => {
 							</label>
 							<button
 								className='btn btn-block btn-hipster'
+								style={{ textTransform: 'none' }}
 								onClick={toggleHasLocation}
 							>
 								{formData.userHasLocation
@@ -275,13 +285,80 @@ const Profile = () => {
 			<br />
 			<br />
 			<div className='form'>
+				{showAlert && <Alert />}
+
 				{formData.userFoundPartner ? (
 					<h1>Kamu ingin cari KawanKos lagi?</h1>
 				) : (
 					<h1>Apakah kamu sudah mendapatkan KawanKos?</h1>
 				)}
+				{formData.userFoundPartner ? (
+					<p>
+						Kalau kamu masih mau mencari KawanKos lagi, silahkan tekan tombol di
+						bawah ya! Nanti kamu hadir lagi di pencarian pengguna lain, selamat
+						mencari!
+					</p>
+				) : (
+					<p>
+						Apabila kamu sudah mendapatkan KawanKos, kamu dapat menekan tombol
+						di bawah. Kamu tidak dapat ditemukan dalam pencarian pengguna lain
+						ketika kamu menekan tombol di bawah ini. Tenang saja, proses ini
+						dapat dikembalikan dengan mudah kok!
+					</p>
+				)}
+
 				<button
+					onClick={toggleFoundButton}
+					type='button'
+					disabled={isLoading}
 					className='btn btn-block'
+				>
+					{isLoading
+						? 'Tunggu sebentar...'
+						: formData.userFoundPartner
+						? 'Iya, aku ingin mencari KawanKos lagi!'
+						: 'Sudah mendapatkan KawanKos!'}
+				</button>
+
+				{foundButton && (
+					<>
+						<br /> <br />
+						<img src={dangerImg} alt='danger' className='img img-danger' />
+						<br />
+						<h3>Kamu yakin dengan perubahan ini?</h3>
+						{formData.userFoundPartner ? (
+							<p>
+								Jika kamu menekan "Ya" maka kamu dapat dicari dan mencari
+								pengguna lain.
+							</p>
+						) : (
+							<p>
+								Jika kamu menekan "Ya" maka kamu tidak akan bisa dicari dan
+								mencari pengguna lain.
+							</p>
+						)}
+						<button
+							className='btn btn-danger btn-block'
+							type='button'
+							disabled={isLoading}
+							onClick={handleFoundButton}
+						>
+							{isLoading ? 'Tunggu sebentar...' : 'Ya, saya mengerti'}
+						</button>
+						<br /> <br />
+						<button
+							className='btn btn-hipster btn-block'
+							type='button'
+							disabled={isLoading}
+							onClick={toggleFoundButton}
+						>
+							{isLoading ? 'Tunggu sebentar...' : 'Batal'}
+						</button>
+					</>
+				)}
+
+				{/* <button
+					className='btn btn-danger btn-block'
 					type='button'
 					disabled={isLoading}
 					onClick={handleFoundButton}
@@ -291,7 +368,7 @@ const Profile = () => {
 						: formData.userFoundPartner
 						? 'Iya, aku ingin mencari KawanKos lagi!'
 						: 'Sudah mendapatkan KawanKos!'}
-				</button>
+				</button> */}
 			</div>
 		</Wrapper>
 	)

@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom'
 import { useAppContext } from '../context/appContext'
 import Wrapper from '../assets/wrappers/ProfilSingkat'
 import ProfileSingkatInfo from './ProfileSingkatInfo'
+import defaultAvatar from '../assets/images/defaultAvatar_rekmld.jpg'
 
 //Profil singkat yang tampil pas di cari kawankos
 const ProfileSingkat = ({
@@ -25,6 +26,9 @@ const ProfileSingkat = ({
 	userReligion,
 	userJob,
 	userMajor,
+	userHasLocation,
+	userLocation,
+	userLocationPrice,
 	createdAt,
 }) => {
 	const { user, setProfileDetail } = useAppContext()
@@ -36,17 +40,30 @@ const ProfileSingkat = ({
 	return (
 		<Wrapper>
 			<header>
-				<div className="main-icon">{name.charAt(0)}</div>
-				<div className="info">
+				{/* <div className="main-icon">{name.charAt(0)}</div> */}
+				<img
+					src={userAvatar === 'defaultAvatar' ? defaultAvatar : userAvatar}
+					alt='avatar'
+					className='main-icon'
+				/>
+				<div className='info'>
 					<h5>{name}</h5>
 					<p>{userStatus}</p>
+					{userHasLocation && (
+						<>
+							<br />
+							<button type='button' className='btn edit-btn'>
+								{userHasLocation && 'Sudah Ada Kamar ✔️'}
+							</button>
+						</>
+					)}
 				</div>
 			</header>
 			<div style={{ display: 'none' }}>
 				{userHomeTown} {userReligion} {userJob} {userMajor}
 			</div>
-			<div className="content">
-				<div className="content-center">
+			<div className='content'>
+				<div className='content-center'>
 					<ProfileSingkatInfo icon={<BiMaleFemale />} text={userGender} />
 					<ProfileSingkatInfo
 						icon={<BiCalendarStar />}
@@ -62,15 +79,16 @@ const ProfileSingkat = ({
 					{/* <div className={`status ${status}`}>{status}</div> */}
 				</div>
 				<footer>
-					<div className="actions">
+					<div className='actions'>
 						<Link
 							// ! DETAIL PROFIL
-							to="/profile-detail"
-							className="btn"
+							to='/profile-detail'
+							className='btn'
 							onClick={() => setProfileDetail(_id)}
 						>
 							Detail Profil
 						</Link>
+
 						{/* <button>Detail Profil</button> */}
 						{/* <Link
 							to="/add-job"

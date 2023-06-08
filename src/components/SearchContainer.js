@@ -23,6 +23,7 @@ const SearchContainer = () => {
 		userGenderOptions,
 		searchUserReligion,
 		userReligionOptions,
+		userHasLocationOptions,
 		searchUserHasLocation,
 		clearFilters,
 		sort,
@@ -139,7 +140,8 @@ const SearchContainer = () => {
 						labelText='Sudah punya lokasi?'
 						name='searchUserHasLocation'
 						value={searchUserHasLocation}
-						list={['semua', 'ya', 'tidak']}
+						handleChange={handleSearch}
+						list={['semua', ...userHasLocationOptions]}
 					/>
 
 					{/* sort */}

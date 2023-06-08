@@ -23,7 +23,8 @@ const Wrapper = styled.article`
 		display: grid;
 		place-items: center;
 		background: var(--primary-500);
-		border-radius: var(--borderRadius);
+		/* border-radius: var(--borderRadius); */
+		border-radius: 50%;
 		font-size: 1.5rem;
 		font-weight: 700;
 		text-transform: uppercase;

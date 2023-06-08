@@ -13,34 +13,38 @@ const Navbar = () => {
 	const { toggleSidebar, logoutUser, user } = useAppContext()
 	return (
 		<Wrapper>
-			<div className="nav-center">
-				<button type="button" className="toggle-btn" onClick={toggleSidebar}>
+			<div className='nav-center'>
+				<button type='button' className='toggle-btn' onClick={toggleSidebar}>
 					<MdFormatAlignLeft />
 				</button>
 				<div>
 					<Logo />
-					<h3 className="logo-text">Halo, {user && user.name}</h3>
+					<h3 className='logo-text'>Halo, {user && user.name}</h3>
 				</div>
-				<div className="btn-container">
+				<div className='btn-container'>
 					<button
-						type="button"
-						className="btn"
+						type='button'
+						className='btn'
 						onClick={() => setShowLogout(!showLogout)}
 					>
 						{/* <FaUserCircle /> */}
-						{user && user.userAvatar === 'defaultAvatar' && (
-							<img className="img-avatar" src={defaultAvatar} />
+						{user && (
+							<img
+								className='img-avatar'
+								src={
+									user.userAvatar === 'defaultAvatar'
+										? defaultAvatar
+										: user.userAvatar
+								}
+							/>
 						)}
-						{user && user.userAvatar !== 'defaultAvatar' && (
-							<img className="img-avatar" src={user.userAvatar} />
-						)}{' '}
 						{user && user.name}
 						<IoCaretDown />
 					</button>
 					<div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}>
-						<button type="button" className="dropdown-btn">
+						<button type='button' className='dropdown-btn'>
 							<NavLink
-								to="profile"
+								to='profile'
 								className={({ isActive }) =>
 									isActive ? 'nav-link active' : 'nav-link'
 								}
@@ -50,7 +54,7 @@ const Navbar = () => {
 							</NavLink>
 						</button>
 						<br />
-						<button type="button" className="dropdown-btn" onClick={logoutUser}>
+						<button type='button' className='dropdown-btn' onClick={logoutUser}>
 							Logout
 						</button>
 					</div>

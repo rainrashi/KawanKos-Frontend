@@ -2,6 +2,7 @@ import { useAppContext } from '../../context/appContext'
 import { useEffect } from 'react'
 import Wrapper from '../../assets/wrappers/ProfileDetails'
 import { Link } from 'react-router-dom'
+import defaultAvatar from '../../assets/images/defaultAvatar_rekmld.jpg'
 import Loading from '../../components/Loading'
 
 const OutboxMessageDetail = () => {
@@ -38,9 +39,19 @@ const OutboxMessageDetail = () => {
 
 	return (
 		<Wrapper>
-			<div className="form">
+			<div className='form'>
 				<h1>Isi Pesan</h1>
-				<div className="deets-center">
+				<div className='deets-center'>
+					<img
+						className='img img-avatar'
+						src={
+							messageTo.userAvatar === 'defaultAvatar'
+								? defaultAvatar
+								: messageTo.userAvatar
+						}
+						alt='avatar'
+					/>
+
 					<h2>Nama Penerima:</h2>
 					<h5>{messageTo.name}</h5>
 
@@ -51,8 +62,8 @@ const OutboxMessageDetail = () => {
 					<h5>{messageContent}</h5>
 
 					<Link
-						to="/profile-detail"
-						className="btn"
+						to='/profile-detail'
+						className='btn'
 						onClick={() => setProfileDetail(recipientId)}
 					>
 						Detail Profil Penerima

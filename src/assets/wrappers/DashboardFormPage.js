@@ -58,6 +58,13 @@ const Wrapper = styled.section`
 		margin-right: auto;
 		border-radius: 50%;
 	}
+	.img-danger {
+		width: 25%;
+		height: 25%;
+		object-fit: cover;
+		margin-left: auto;
+		margin-right: auto;
+	}
 	.img-preview {
 		width: 70%;
 		height: 70%;

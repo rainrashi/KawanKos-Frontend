@@ -139,7 +139,7 @@ const reducer = (state, action) => {
 			// jobLocation: action.payload.location,
 			showAlert: true,
 			alertType: 'success',
-			alertText: 'Profil berhasil diperbarui!',
+			alertText: action.payload.msg,
 		}
 	}
 	if (action.type === UPDATE_USER_ERROR) {

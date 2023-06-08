@@ -108,6 +108,7 @@ const initialState = {
 		'Lainnya',
 	],
 	userReligion: 'Lainnya',
+	userHasLocationOptions: ['ya', 'tidak'],
 	// userDescription: '',
 	// userAvatar: 'defaultAvatar',
 	// userAge: 18,
@@ -258,7 +259,7 @@ const AppProvider = ({ children }) => {
 			dispatch({
 				type: UPDATE_USER_SUCCESS,
 				// payload: { user, location, token },
-				payload: { user, token },
+				payload: { user, token, msg: 'Pembaruan Biodata Kamu Berhasil!' },
 			})
 			// addUserToLocalStorage({ user, token, location })
 			addUserToLocalStorage({ user, token })
@@ -283,11 +284,24 @@ const AppProvider = ({ children }) => {
 
 			// const { user, location, token } = data
 			const { user, token } = data
+			const { userFoundPartner } = user
+
+			let message = ''
+			if (userFoundPartner)
+				message =
+					'Selamat! kamu sudah menemukan KawanKos-mu! Semoga langgeng ya!'
+			else
+				message =
+					'Sekarang kamu sudah dapat hadir dalam pencarian, selamat mencari KawanKos-mu!'
 
 			dispatch({
 				type: UPDATE_USER_SUCCESS,
 				// payload: { user, location, token },
-				payload: { user, token },
+				payload: {
+					user,
+					token,
+					msg: message,
+				},
 			})
 			// addUserToLocalStorage({ user, token, location })
 			addUserToLocalStorage({ user, token })
@@ -588,10 +602,11 @@ const AppProvider = ({ children }) => {
 	}
 
 	//avatar with backend
+	//! did not work but save it here for legacy
 	const changeAvatar = async (avatarData) => {
 		dispatch({ type: UPLOADING_AVATAR_BEGIN })
 		try {
-			const { userAvatarNew } = state
+			// const { userAvatarNew } = state
 			// ambil file
 			const file = avatarData
 			let formData = new FormData()
@@ -603,10 +618,10 @@ const AppProvider = ({ children }) => {
 					'content-type': 'multipart/form-data',
 				},
 			})
-			userAvatarNew = res.data.url
-			dispatch({ type: UPLOADING_AVATAR_SUCCESS, payload: userAvatarNew })
-			console.log(res.data.url)
-			console.log(userAvatarNew)
+			// userAvatarNew = res.data.url
+			dispatch({ type: UPLOADING_AVATAR_SUCCESS, payload: res.data.url })
+			// console.log(res.data.url)
+			// console.log(userAvatarNew)
 		} catch (error) {
 			dispatch({
 				type: UPLOADING_AVATAR_ERROR,
@@ -625,16 +640,13 @@ const AppProvider = ({ children }) => {
 				currentUser
 			)
 
-			// const { user, location, token } = data
 			const { user, token } = data
 
 			setTimeout(() => {
 				dispatch({
 					type: UPDATE_USER_SUCCESS,
-					// payload: { user, location, token },
-					payload: { user, token },
+					payload: { user, token, msg: 'Pembaruan Avatar Berhasil!' },
 				})
-				// addUserToLocalStorage({ user, token, location })
 				addUserToLocalStorage({ user, token })
 			}, 5000)
 		} catch (error) {
