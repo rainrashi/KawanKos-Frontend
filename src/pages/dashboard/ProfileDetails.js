@@ -16,8 +16,11 @@ const ProfileDetails = () => {
 		userReligion: 'testUserReligion',
 		userJob: 'testUserJob',
 		userMajor: 'testUserMajor',
-		userBudget: 1000000,
+		userBudget: 88888888,
 		userDescription: 'testUserDescription',
+		userHasLocation: false,
+		userLocation: 'testUserLocation',
+		userLocationPrice: 8888888,
 	}
 
 	const {
@@ -53,20 +56,23 @@ const ProfileDetails = () => {
 		userMajor,
 		userBudget,
 		userDescription,
+		userHasLocation,
+		userLocation,
+		userLocationPrice,
 	} = detailState
 
 	return (
 		<Wrapper>
-			<div className="form">
+			<div className='form'>
 				<h1>Detail Profil {name.split(' ')[0]}</h1>
-				<div className="deets-center">
-					<div className="deets-row">
+				<div className='deets-center'>
+					<div className='deets-row'>
 						<center>
 							{userAvatar === 'defaultAvatar' && (
-								<img className="img-avatar" src={defaultAvatar} />
+								<img className='img-avatar' src={defaultAvatar} />
 							)}
 							{userAvatar !== 'defaultAvatar' && (
-								<img className="img-avatar" src={userAvatar} />
+								<img className='img-avatar' src={userAvatar} />
 							)}
 						</center>
 					</div>
@@ -101,9 +107,19 @@ const ProfileDetails = () => {
 					<h2>Deskripsi pribadi:</h2>
 					<p>{userDescription}</p>
 
+					{userHasLocation && (
+						<>
+							<h2>Lokasi Indekos:</h2>
+							<p>{userLocation}</p>
+
+							<h2>Harga kamar:</h2>
+							<p>{userLocationPrice}</p>
+						</>
+					)}
+
 					<Link
-						to="/create-message"
-						className="btn"
+						to='/create-message'
+						className='btn'
 						onClick={() => setMessageRecipient(profileDetailId)}
 					>
 						Kirim Pesan

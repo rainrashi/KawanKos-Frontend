@@ -28,6 +28,7 @@ const Wrapper = styled.section`
 		object-fit: cover;
 		margin-left: auto;
 		margin-right: auto;
+		border-radius: 50%;
 	}
 	h3 {
 		margin-top: 0;

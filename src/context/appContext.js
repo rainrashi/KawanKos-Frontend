@@ -50,6 +50,9 @@ import {
 	OUTBOX_DETAIL_BEGIN,
 	OUTBOX_DETAIL_SUCCESS,
 	OUTBOX_DETAIL_ERROR,
+	UPLOADING_AVATAR_BEGIN,
+	UPLOADING_AVATAR_SUCCESS,
+	UPLOADING_AVATAR_ERROR,
 } from './actions'
 
 const token = localStorage.getItem('token')
@@ -134,6 +137,8 @@ const initialState = {
 	messageTitle: '',
 	messageContent: '',
 	messageReplyTo: '',
+	//avatarUploadURL
+	userAvatarNew: '',
 	// * Remnants of J
 	editJobId: '',
 	position: '',
@@ -194,7 +199,7 @@ const AppProvider = ({ children }) => {
 	const clearAlert = () => {
 		setTimeout(() => {
 			dispatch({ type: CLEAR_ALERT })
-		}, 3000)
+		}, 5000)
 	}
 
 	//local storage
@@ -582,6 +587,66 @@ const AppProvider = ({ children }) => {
 		dispatch({ type: CHANGE_PAGE, payload: { page } })
 	}
 
+	//avatar with backend
+	const changeAvatar = async (avatarData) => {
+		dispatch({ type: UPLOADING_AVATAR_BEGIN })
+		try {
+			const { userAvatarNew } = state
+			// ambil file
+			const file = avatarData
+			let formData = new FormData()
+			formData.append('avatar', file)
+
+			//upload ke cloud
+			const res = await authFetch.post('/uploads', formData, {
+				headers: {
+					'content-type': 'multipart/form-data',
+				},
+			})
+			userAvatarNew = res.data.url
+			dispatch({ type: UPLOADING_AVATAR_SUCCESS, payload: userAvatarNew })
+			console.log(res.data.url)
+			console.log(userAvatarNew)
+		} catch (error) {
+			dispatch({
+				type: UPLOADING_AVATAR_ERROR,
+				payload: { msg: error.response.data.msg },
+			})
+			console.log('upload gagal')
+		}
+	}
+
+	//updateUserAvatar
+	const updateUserAvatar = async (currentUser) => {
+		dispatch({ type: UPDATE_USER_BEGIN })
+		try {
+			const { data } = await authFetch.patch(
+				'/auth/updateUserAvatar',
+				currentUser
+			)
+
+			// const { user, location, token } = data
+			const { user, token } = data
+
+			setTimeout(() => {
+				dispatch({
+					type: UPDATE_USER_SUCCESS,
+					// payload: { user, location, token },
+					payload: { user, token },
+				})
+				// addUserToLocalStorage({ user, token, location })
+				addUserToLocalStorage({ user, token })
+			}, 5000)
+		} catch (error) {
+			if (error.response.status !== 401) {
+				dispatch({
+					type: UPDATE_USER_ERROR,
+					payload: { msg: error.response.data.msg },
+				})
+			}
+		}
+	}
+
 	// * Remnants of J
 	//create job
 	const createJob = async () => {
@@ -697,6 +762,8 @@ const AppProvider = ({ children }) => {
 				getOutbox,
 				setSingleMessageOutbox,
 				getSingleMessageDetailOutbox,
+				changeAvatar,
+				updateUserAvatar,
 			}}
 		>
 			{children}

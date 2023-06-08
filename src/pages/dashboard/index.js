@@ -13,6 +13,7 @@ import OutboxContainer from './OutboxContainer'
 import OutboxMessageDetail from './OutboxMessageDetail'
 import InboxUnseenReminder from './InboxUnseenReminder'
 import HowToUse from './HowToUse'
+import UploadAvatar from './UploadAvatarPage'
 
 export {
 	AddJob,
@@ -30,4 +31,5 @@ export {
 	OutboxMessageDetail,
 	InboxUnseenReminder,
 	HowToUse,
+	UploadAvatar,
 }

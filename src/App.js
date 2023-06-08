@@ -13,6 +13,7 @@ import {
 	InboxMessageDetail,
 	OutboxMessageDetail,
 	OutboxContainer,
+	UploadAvatar,
 } from './pages/dashboard'
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
 		<BrowserRouter>
 			<Routes>
 				<Route
-					path="/"
+					path='/'
 					element={
 						<ProtectedRoute>
 							<SharedLayout />
@@ -29,24 +30,25 @@ function App() {
 				>
 					{/* <Route path='stats' element={<Stats />} /> */}
 					<Route index element={<Home />} />
-					<Route path="cari-kawankos" element={<AllProfiles />} />
-					<Route path="profile" element={<Profile />} />
-					<Route path="profile-detail" element={<ProfileDetails />} />
-					<Route path="create-message" element={<WriteMessage />} />
-					<Route path="inbox" element={<Inbox />} />
-					<Route path="inbox-message-detail" element={<InboxMessageDetail />} />
-					<Route path="outbox" element={<OutboxContainer />} />
+					<Route path='cari-kawankos' element={<AllProfiles />} />
+					<Route path='profile' element={<Profile />} />
+					<Route path='upload-avatar' element={<UploadAvatar />} />
+					<Route path='profile-detail' element={<ProfileDetails />} />
+					<Route path='create-message' element={<WriteMessage />} />
+					<Route path='inbox' element={<Inbox />} />
+					<Route path='inbox-message-detail' element={<InboxMessageDetail />} />
+					<Route path='outbox' element={<OutboxContainer />} />
 					<Route
-						path="outbox-message-detail"
+						path='outbox-message-detail'
 						element={<OutboxMessageDetail />}
 					/>
 					{/* Remnant from J */}
-					<Route path="all-jobs" element={<AllJobs />} />
-					<Route path="add-job" element={<AddJob />} />
+					<Route path='all-jobs' element={<AllJobs />} />
+					<Route path='add-job' element={<AddJob />} />
 				</Route>
-				<Route path="/register" element={<Register />} />
-				<Route path="/landing" element={<Landing />} />
-				<Route path="*" element={<Error />} />
+				<Route path='/register' element={<Register />} />
+				<Route path='/landing' element={<Landing />} />
+				<Route path='*' element={<Error />} />
 			</Routes>
 		</BrowserRouter>
 	)

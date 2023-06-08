@@ -47,6 +47,9 @@ import {
 	OUTBOX_DETAIL_BEGIN,
 	OUTBOX_DETAIL_SUCCESS,
 	OUTBOX_DETAIL_ERROR,
+	UPLOADING_AVATAR_BEGIN,
+	UPLOADING_AVATAR_SUCCESS,
+	UPLOADING_AVATAR_ERROR,
 } from './actions'
 import { initialState } from './appContext'
 
@@ -121,6 +124,9 @@ const reducer = (state, action) => {
 		return {
 			...state,
 			isLoading: true,
+			showAlert: true,
+			alertType: 'success',
+			alertText: 'Perubahan sedang diterapkan... harap tunggu sebentar',
 		}
 	}
 	if (action.type === UPDATE_USER_SUCCESS) {
@@ -473,6 +479,36 @@ const reducer = (state, action) => {
 	//ganti halaman
 	if (action.type === CHANGE_PAGE) {
 		return { ...state, page: action.payload.page }
+	}
+
+	//upload alert
+	if (action.type === UPLOADING_AVATAR_BEGIN) {
+		return {
+			...state,
+			showAlert: true,
+			isLoading: true,
+			alertType: 'danger',
+			alertText: 'Sedang upload gambar profil....',
+		}
+	}
+	if (action.type === UPLOADING_AVATAR_SUCCESS) {
+		return {
+			...state,
+			showAlert: true,
+			isLoading: false,
+			alertType: 'success',
+			alertText: 'Berhasil upload gambar profil!',
+			userAvatarNew: action.payload.userAvatarNew,
+		}
+	}
+	if (action.type === UPLOADING_AVATAR_ERROR) {
+		return {
+			...state,
+			showAlert: true,
+			isLoading: false,
+			alertType: 'danger',
+			alertText: action.payload.msg,
+		}
 	}
 
 	//* Remnants of J

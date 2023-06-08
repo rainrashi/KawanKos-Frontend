@@ -27,6 +27,7 @@ const SearchContainer = () => {
 		clearFilters,
 		sort,
 		sortOptions,
+		getProfiles,
 	} = useAppContext()
 
 	// const [values, setValues] = useState()
@@ -62,23 +63,23 @@ const SearchContainer = () => {
 
 	return (
 		<Wrapper>
-			<form className="form">
+			<form className='form'>
 				<h4>Cari Kawankosmu disini!</h4>
 
-				<div className="form-center">
+				<div className='form-center'>
 					{/* search nama */}
 					<FormRow
-						type="text"
-						labelText="Nama"
-						name="search"
+						type='text'
+						labelText='Nama'
+						name='search'
 						value={localSearch}
 						handleChange={optimizedDebounce}
 					/>
 
 					{/* search by status */}
 					<FormRowSelect
-						labelText="Status Pelajar/Pekerja"
-						name="searchUserStatus"
+						labelText='Status Pelajar/Pekerja'
+						name='searchUserStatus'
 						value={searchUserStatus}
 						handleChange={handleSearch}
 						list={['semua', ...userStatusOptions]}
@@ -87,9 +88,9 @@ const SearchContainer = () => {
 					{/* search by job */}
 					{searchUserStatus === 'Pekerja' && (
 						<FormRow
-							type="text"
-							labelText="Pekerjaan"
-							name="searchUserJob"
+							type='text'
+							labelText='Pekerjaan'
+							name='searchUserJob'
 							value={searchUserJob}
 							handleChange={handleSearch}
 						/>
@@ -98,9 +99,9 @@ const SearchContainer = () => {
 					{/* search by major */}
 					{searchUserStatus === 'Pelajar' && (
 						<FormRow
-							type="text"
-							labelText="Jurusan"
-							name="searchUserMajor"
+							type='text'
+							labelText='Jurusan'
+							name='searchUserMajor'
 							value={searchUserMajor}
 							handleChange={handleSearch}
 						/>
@@ -108,17 +109,17 @@ const SearchContainer = () => {
 
 					{/* search by hometown */}
 					<FormRow
-						type="text"
-						labelText="Kota Asal"
-						name="searchUserHomeTown"
+						type='text'
+						labelText='Kota Asal'
+						name='searchUserHomeTown'
 						value={searchUserHomeTown}
 						handleChange={handleSearch}
 					/>
 
 					{/* search by gender */}
 					<FormRowSelect
-						labelText="Jenis Kelamin"
-						name="searchUserGender"
+						labelText='Jenis Kelamin'
+						name='searchUserGender'
 						value={searchUserGender}
 						handleChange={handleSearch}
 						list={['semua', ...userGenderOptions]}
@@ -126,8 +127,8 @@ const SearchContainer = () => {
 
 					{/* search by religion */}
 					<FormRowSelect
-						labelText="Agama"
-						name="searchUserReligion"
+						labelText='Agama'
+						name='searchUserReligion'
 						value={searchUserReligion}
 						handleChange={handleSearch}
 						list={['semua', ...userReligionOptions]}
@@ -135,22 +136,24 @@ const SearchContainer = () => {
 
 					{/* search by has place */}
 					<FormRowSelect
-						labelText="Sudah punya lokasi?"
-						name="searchUserHasLocation"
+						labelText='Sudah punya lokasi?'
+						name='searchUserHasLocation'
 						value={searchUserHasLocation}
 						list={['semua', 'ya', 'tidak']}
 					/>
 
 					{/* sort */}
 					<FormRowSelect
-						name="sort"
+						name='sort'
 						value={sort}
 						handleChange={handleSearch}
 						list={sortOptions}
 					/>
-					{/* <button type="button">Terapkan Filter</button> */}
+					<button type='button' className='btn btn-block' onClick={getProfiles}>
+						Terapkan Filter
+					</button>
 					<button
-						className="btn btn-block btn-danger"
+						className='btn btn-block btn-danger'
 						disabled={isLoading}
 						onClick={handleSubmit}
 					>

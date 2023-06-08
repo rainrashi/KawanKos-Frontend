@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useReducer } from 'react'
 import {
 	FormRow,
 	Alert,
@@ -8,6 +8,21 @@ import {
 } from '../../components'
 import { useAppContext } from '../../context/appContext'
 import Wrapper from '../../assets/wrappers/DashboardFormPage'
+import { Link } from 'react-router-dom'
+import defaultAvatar from '../../assets/images/defaultAvatar_rekmld.jpg'
+import { AiFillPicture } from 'react-icons/ai'
+
+// ! for upload avatar, might move later
+import {
+	UPLOADING_AVATAR_BEGIN,
+	UPLOADING_AVATAR_SUCCESS,
+	UPLOADING_AVATAR_ERROR,
+} from '../../context/actions'
+import reducer from '../../context/reducer'
+import axios from 'axios'
+
+//! upload avatar alternative
+import UploadAvatarBase64 from './UploadAvatarBase64'
 
 const Profile = () => {
 	const {
@@ -20,11 +35,15 @@ const Profile = () => {
 		userStatusOptions,
 		userReligionOptions,
 		updateUserFoundPartner,
+		userAvatarNew,
+		// token,
+		changeAvatar,
 	} = useAppContext()
 
 	const [formData, setFormData] = useState({
 		name: user?.name,
 		email: user?.email,
+		userAvatar: user?.userAvatar,
 		userDescription: user?.userDescription,
 		userGender: user?.userGender,
 		userAge: user?.userAge,
@@ -33,13 +52,14 @@ const Profile = () => {
 		userMajor: user?.userMajor,
 		userJob: user?.userJob,
 		userBudget: user?.userBudget,
-		userAvatar: user?.userAvatar,
 		userHomeTown: user?.userHomeTown,
 		userFoundPartner: user?.userFoundPartner,
 		userHasLocation: user?.userHasLocation,
 		userLocation: user?.userLocation,
 		userLocationPrice: user?.userLocationPrice,
 	})
+
+	const [avatar, setAvatar] = useState(user?.userAvatar)
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
@@ -77,53 +97,83 @@ const Profile = () => {
 		}))
 	}
 
+	// TODO AVATAR
+	// const inputFile = useRef(null)
+	// const handleAvatar = () => {
+	// 	inputFile.current.click()
+	// }
+	// const inputAvatar = (e) => {
+	// 	e.preventDefault()
+	// 	const selectedAvatar = e.target.files[0]
+	// 	setAvatar(selectedAvatar)
+	// 	changeAvatar(avatar)
+	// }
+
 	return (
 		<Wrapper>
-			<form className="form" onSubmit={handleSubmit}>
+			<form className='form' onSubmit={handleSubmit}>
 				<h3>Edit Profil Kamu</h3>
 				{showAlert && <Alert />}
-				<div className="form-center">
+				<div className='form-center'>
+					{/* special untuk AVATAR */}
+
+					<label htmlFor='userAvatar'>Gambar Profil:</label>
+					<UploadAvatarBase64 />
+
+					{/* <Link to='/upload-avatar'>
+						<div className='avatar-area'>
+							<img
+								src={
+									formData.userAvatar === 'defaultAvatar'
+										? defaultAvatar
+										: formData.userAvatar
+								}
+								className='img-avatar'
+							/>
+						</div>
+					</Link> */}
+					{/* biodata lain */}
 					<FormRow
-						type="text"
-						labelText="nama"
-						name="name"
+						type='text'
+						labelText='nama'
+						name='name'
 						value={formData.name}
 						handleChange={handleChange}
 						required
 					/>
 					<FormRow
-						type="text"
-						labelText="email"
-						name="email"
+						type='text'
+						labelText='email'
+						name='email'
 						value={formData.email}
 						handleChange={handleChange}
 						required
 					/>
 					<FormRowSelect
-						labelText="Jenis Kelamin"
-						name="userGender"
+						labelText='Jenis Kelamin'
+						name='userGender'
 						value={formData.userGender}
 						list={userGenderOptions}
 						handleChange={handleChange}
 						required
 					/>
 					<FormRowNumber
-						name="userAge"
-						labelText="Umur Anda"
+						name='userAge'
+						labelText='Umur Anda'
 						value={formData.userAge}
 						handleChange={handleChange}
 						required
 					/>
 					<FormRow
-						labelText="Asal Kota Anda"
-						name="userHomeTown"
+						labelText='Asal Kota Anda'
+						name='userHomeTown'
 						value={formData.userHomeTown}
 						handleChange={handleChange}
 						required
 					/>
 					<FormRowSelect
-						labelText="Status Pekerja/Pelajar"
-						name="userStatus"
+						labelText='Status Pekerja/Pelajar'
+						name='userStatus'
 						value={formData.userStatus}
 						list={userStatusOptions}
 						handleChange={handleChange}
@@ -131,8 +181,8 @@ const Profile = () => {
 					/>
 					{formData.userStatus === 'Pekerja' && (
 						<FormRow
-							labelText="Pekerjaan Anda"
-							name="userJob"
+							labelText='Pekerjaan Anda'
+							name='userJob'
 							value={formData.userJob}
 							handleChange={handleChange}
 							required
@@ -140,40 +190,41 @@ const Profile = () => {
 					)}
 					{formData.userStatus === 'Pelajar' && (
 						<FormRow
-							labelText="Jurusan Anda"
-							name="userMajor"
+							labelText='Jurusan Anda'
+							name='userMajor'
 							value={formData.userMajor}
 							handleChange={handleChange}
 							required
 						/>
 					)}
 					<FormRowSelect
-						labelText="Agama"
-						name="userReligion"
+						labelText='Agama'
+						name='userReligion'
 						value={formData.userReligion}
 						list={userReligionOptions}
 						handleChange={handleChange}
 						required
 					/>
 					<FormRowNumber
-						labelText="Pilih maksimal perkiraan budget anda untuk indekos"
-						name="userBudget"
+						labelText='Pilih maksimal perkiraan budget anda untuk indekos'
+						name='userBudget'
 						value={formData.userBudget}
 						handleChange={handleChange}
-						step="100000"
-						min="500000"
+						step='100000'
+						min='500000'
 						required
 					/>
 					<FormRowDescription
-						labelText="Tentang anda"
-						name="userDescription"
+						labelText='Tentang anda'
+						name='userDescription'
 						value={formData.userDescription}
 						handleChange={handleChange}
 						required
 					/>
-					<div className="form-inside">
-						<div className="form-row">
-							<label htmlFor="userHasLocation">
+					<br />
+					<div className='form-inside'>
+						<div className='form-row'>
+							<label htmlFor='userHasLocation'>
 								<h3>
 									<b>
 										{formData.userHasLocation
@@ -183,7 +234,7 @@ const Profile = () => {
 								</h3>
 							</label>
 							<button
-								className="btn btn-block btn-hipster"
+								className='btn btn-block btn-hipster'
 								onClick={toggleHasLocation}
 							>
 								{formData.userHasLocation
@@ -193,29 +244,29 @@ const Profile = () => {
 						</div>
 						{formData.userHasLocation && (
 							<FormRow
-								labelText="Alamat Kost"
-								name="userLocation"
+								labelText='Alamat Kost'
+								name='userLocation'
 								value={formData.userLocation}
-								placeholder="Alamat kost kamu..."
+								placeholder='Alamat kost kamu...'
 								handleChange={handleChange}
 								required
 							/>
 						)}
 						{formData.userHasLocation && (
 							<FormRowNumber
-								labelText="Harga Kamar"
-								name="userLocationPrice"
+								labelText='Harga Kamar'
+								name='userLocationPrice'
 								value={formData.userLocationPrice}
 								handleChange={handleChange}
-								placeholder="Contoh: 10000000, perkalian 100000"
-								step="100000"
-								min="100000"
+								placeholder='Contoh: 10000000, perkalian 100000'
+								step='100000'
+								min='100000'
 								required
 							/>
 						)}
 					</div>
 					<br />
-					<button className="btn btn-block" type="submit" disabled={isLoading}>
+					<button className='btn btn-block' type='submit' disabled={isLoading}>
 						{isLoading ? 'Tunggu sebentar....' : 'Simpan perubahan'}
 					</button>
 				</div>
@@ -223,15 +274,15 @@ const Profile = () => {
 			<br />
 			<br />
 			<br />
-			<div className="form">
+			<div className='form'>
 				{formData.userFoundPartner ? (
 					<h1>Kamu ingin cari KawanKos lagi?</h1>
 				) : (
 					<h1>Apakah kamu sudah mendapatkan KawanKos?</h1>
 				)}
 				<button
-					className="btn btn-block"
-					type="button"
+					className='btn btn-block'
+					type='button'
 					disabled={isLoading}
 					onClick={handleFoundButton}
 				>

@@ -6,8 +6,49 @@ const Wrapper = styled.section`
 	background: var(--white);
 	padding: 3rem 2rem 4rem;
 	box-shadow: var(--shadow-2);
+
 	h3 {
 		margin-top: 0;
+	}
+	.avatar-area {
+		position: relative;
+		width: 200px;
+		height: 200px;
+		margin: 20px auto;
+		text-align: center;
+		transition: all 0.3s ease;
+		&:hover {
+			transform: scale(1.05);
+			cursor: pointer;
+		}
+		img {
+			width: 200px;
+			height: 200px;
+			object-fit: cover;
+			border-radius: 50%;
+			&:hover {
+				box-shadow: 1px 1px 1px 1px #334e68;
+			}
+		}
+		svg {
+			position: absolute;
+			top: 10%;
+			left: 50%;
+			transform: translate(-50%, 0);
+			height: 100%;
+			width: 50%;
+			text-align: center;
+			transition: all 0.3s ease;
+			/* display: none; */
+			&:hover {
+				display: visible;
+				transition: all 0.3 ease;
+				opacity: 0.9;
+			}
+		}
+	}
+	.avatar-input {
+		display: none;
 	}
 	.img-avatar {
 		width: 25%;
@@ -15,6 +56,15 @@ const Wrapper = styled.section`
 		object-fit: cover;
 		margin-left: auto;
 		margin-right: auto;
+		border-radius: 50%;
+	}
+	.img-preview {
+		width: 70%;
+		height: 70%;
+		object-fit: cover;
+		margin-left: auto;
+		margin-right: auto;
+		border-radius: 50%;
 	}
 	.form {
 		margin: auto;
@@ -33,6 +83,13 @@ const Wrapper = styled.section`
 		max-width: 90%;
 		width: 95%;
 		border-style: dotted;
+	}
+	.form-avatar {
+		width: 25%;
+		height: 25%;
+		object-fit: cover;
+		margin-left: auto;
+		margin-right: auto;
 	}
 	.form-row {
 		margin-bottom: 0;

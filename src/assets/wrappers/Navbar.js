@@ -10,6 +10,7 @@ const Wrapper = styled.nav`
 		width: 20px;
 		height: 20px;
 		object-fit: cover;
+		border-radius: 50%;
 	}
 	.logo {
 		display: flex;
