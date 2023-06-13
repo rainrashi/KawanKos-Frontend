@@ -38,6 +38,9 @@ const Inbox = () => {
 
 	return (
 		<Wrapper>
+			<center>
+				<h1>Inbox</h1>
+			</center>
 			<h5>Terdapat {userInboxMessages.length} pesan dalam inbox anda</h5>
 			<div>
 				<table>
@@ -56,22 +59,22 @@ const Inbox = () => {
 									<td>{messages.messageSeen ? <CiRead /> : <CiUnread />}</td>
 									<td>
 										{messages.messageSeen ? (
-											<b>{messages.messageFrom.name}</b>
+											<>{messages.messageFrom.name}</>
 										) : (
-											<p>{messages.messageFrom.name}</p>
+											<b>{messages.messageFrom.name}</b>
 										)}
 									</td>
 									<td>
 										{messages.messageSeen ? (
-											<b>{messages.messageTitle}</b>
+											<>{messages.messageTitle}</>
 										) : (
-											<p>{messages.messageTitle}</p>
+											<b>{messages.messageTitle}</b>
 										)}
 									</td>
 									<td>
 										<Link
 											to={`/inbox-message-detail`}
-											className="btn"
+											className='btn'
 											onClick={() => setSingleMessage(messages._id)}
 										>
 											Buka

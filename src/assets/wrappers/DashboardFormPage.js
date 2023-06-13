@@ -82,6 +82,21 @@ const Wrapper = styled.section`
 		width: 50%;
 		border-style: dotted;
 	}
+	.row-container {
+		display: flex;
+		align-items: center;
+		margin-bottom: 1rem;
+		margin-top: 1rem;
+		svg {
+			width: 5%;
+			height: 5%;
+			margin-right: 1rem;
+		}
+		.row-content {
+			display: flex;
+			flex-direction: column;
+		}
+	}
 	.form-inside {
 		margin: auto;
 		border-radius: 0;

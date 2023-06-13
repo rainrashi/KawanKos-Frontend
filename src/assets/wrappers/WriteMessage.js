@@ -6,6 +6,34 @@ const Wrapper = styled.section`
 	background: var(--white);
 	padding: 3rem 2rem 4rem;
 	box-shadow: var(--shadow-2);
+	.deets-row-container {
+		display: flex;
+		align-items: center;
+		svg {
+			width: 10%;
+			height: 10%;
+			margin-right: 10px;
+		}
+		.deets-content {
+			display: flex;
+			flex-direction: column;
+		}
+	}
+	.row-container {
+		display: flex;
+		align-items: center;
+		margin-bottom: 1rem;
+		margin-top: 1rem;
+		svg {
+			width: 7%;
+			height: 7%;
+			margin-right: 1rem;
+		}
+		.row-content {
+			display: flex;
+			flex-direction: column;
+		}
+	}
 	.img-avatar {
 		width: 25%;
 		height: 25%;

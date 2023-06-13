@@ -31,14 +31,17 @@ const OutboxContainer = () => {
 		return (
 			<Wrapper>
 				{/* <p>Kamu belum mengirimkan pesan ke calon KawanKos.</p> */}
-				<img src={placeholderSVG} alt="" className="img img-avatar" />
+				<img src={placeholderSVG} alt='' className='img img-avatar' />
 			</Wrapper>
 		)
 	}
 
 	return (
 		<Wrapper>
-			<div className="form">
+			<div className='form'>
+				<center>
+					<h1>Outbox</h1>
+				</center>
 				<h5>
 					Kamu telah mengirim {totalOutbox} pesan kepada calon KawanKos kamu!
 				</h5>
@@ -60,13 +63,13 @@ const OutboxContainer = () => {
 										<td>
 											<Link
 												to={`/outbox-message-detail`}
-												className="btn"
+												className='btn'
 												onClick={() => setSingleMessageOutbox(messages._id)}
 											>
 												Buka
 											</Link>
 											{'  '}
-											<button className="btn btn-danger">Hapus</button>
+											{/* <button className='btn btn-danger'>Hapus</button> */}
 										</td>
 									</tr>
 								)

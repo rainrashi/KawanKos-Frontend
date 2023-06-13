@@ -1,3 +1,5 @@
+import { TfiWrite } from 'react-icons/tfi'
+
 const FormRowDescription = ({
 	type,
 	name,
@@ -7,10 +9,15 @@ const FormRowDescription = ({
 	placeholder,
 }) => {
 	return (
-		<div className="form-row">
-			<label htmlFor={name} className="form-label">
-				{labelText || name}
-			</label>
+		<div className='form-row'>
+			<div className='row-container'>
+				<TfiWrite />
+				<div className='row-content'>
+					<label htmlFor={name} className='form-label'>
+						{labelText || name}
+					</label>
+				</div>
+			</div>
 			<textarea
 				value={value}
 				name={name}

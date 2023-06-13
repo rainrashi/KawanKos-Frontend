@@ -11,6 +11,20 @@ import Wrapper from '../../assets/wrappers/DashboardFormPage'
 import dangerImg from '../../assets/images/danger.svg'
 import { Link } from 'react-router-dom'
 import defaultAvatar from '../../assets/images/defaultAvatar_rekmld.jpg'
+
+//icons import
+import {
+	MdDescription,
+	MdOutlineHomeWork,
+	MdPermIdentity,
+	MdShareLocation,
+} from 'react-icons/md'
+import { BiCalendarStar, BiMaleFemale } from 'react-icons/bi'
+import { BsStars } from 'react-icons/bs'
+import { SiHomeadvisor } from 'react-icons/si'
+import { IoPricetag, IoSchool } from 'react-icons/io5'
+import { HiOfficeBuilding } from 'react-icons/hi'
+import { FaRegMoneyBillAlt } from 'react-icons/fa'
 import { AiFillPicture } from 'react-icons/ai'
 
 // ! for upload avatar, might move later
@@ -142,6 +156,7 @@ const Profile = () => {
 						</div>
 					</Link> */}
 					{/* biodata lain */}
+
 					<FormRow
 						type='text'
 						labelText='nama'

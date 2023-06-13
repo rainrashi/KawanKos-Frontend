@@ -5,7 +5,8 @@
 }
 
 /* fonts */
-@import url('https://fonts.googleapis.com/css2?family=Cabin&family=Roboto+Condensed:wght@400;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Cabin&family=Roboto+Condensed:wght@400;700&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Cabin&family=Hind:wght@500;700&display=swap');
 
 html {
 	font-size: 100%;
@@ -44,7 +45,8 @@ html {
 	--green-dark: #0f5132;
 
 	/* fonts  */
-	--headingFont: 'Roboto Condensed', Sans-Serif;
+	/* --headingFont: 'Roboto Condensed', Sans-Serif; */
+	--headingFont: 'Hind', Sans-Serif;
 	--bodyFont: 'Cabin', Sans-Serif;
 	--small-text: 0.875rem;
 	--extra-small-text: 0.7em;
@@ -267,6 +269,7 @@ ul {
 	letter-spacing: var(--letterSpacing);
 	text-transform: capitalize;
 }
+
 /* alert */
 
 @keyframes spinner {

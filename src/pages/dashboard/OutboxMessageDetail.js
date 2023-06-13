@@ -5,6 +5,11 @@ import { Link } from 'react-router-dom'
 import defaultAvatar from '../../assets/images/defaultAvatar_rekmld.jpg'
 import Loading from '../../components/Loading'
 
+//icons
+import { IoSend } from 'react-icons/io5'
+import { MdTitle } from 'react-icons/md'
+import { BiMailSend } from 'react-icons/bi'
+
 const OutboxMessageDetail = () => {
 	// DO NOT USE MESSAGEOUTBOX DETAILS
 	// SOMEHOW WILL RESET?????????
@@ -40,7 +45,10 @@ const OutboxMessageDetail = () => {
 	return (
 		<Wrapper>
 			<div className='form'>
-				<h1>Isi Pesan</h1>
+				<center>
+					<h1>Isi Pesan (Outbox)</h1>
+				</center>
+
 				<div className='deets-center'>
 					<img
 						className='img img-avatar'
@@ -51,19 +59,43 @@ const OutboxMessageDetail = () => {
 						}
 						alt='avatar'
 					/>
+					<br />
 
-					<h2>Nama Penerima:</h2>
-					<h5>{messageTo.name}</h5>
+					<div className='deets-row-container'>
+						<IoSend />
+						<div className='deets-content'>
+							<label>
+								<b>Pesan ini kamu kirim ke: </b>
+							</label>
+							<h2>{messageTo.name}</h2>
+						</div>
+					</div>
 
-					<h2>Judul Pesan:</h2>
-					<h5>{messageTitle}</h5>
+					<div className='deets-row-container'>
+						<MdTitle />
+						<div className='deets-content'>
+							<label>
+								<b>Judul Pesan: </b>
+							</label>
+							<h2>{messageTitle}</h2>
+						</div>
+					</div>
 
-					<h2>Isi Pesan:</h2>
-					<h5>{messageContent}</h5>
+					<div className='deets-row-container'>
+						<BiMailSend />
+						<div className='deets-content'>
+							<label>
+								<b>Isi Pesan: </b>
+							</label>
+							<p>{messageContent}</p>
+						</div>
+					</div>
+
+					<br />
 
 					<Link
 						to='/profile-detail'
-						className='btn'
+						className='btn btn-block btn-hipster'
 						onClick={() => setProfileDetail(recipientId)}
 					>
 						Detail Profil Penerima

@@ -12,7 +12,21 @@ const Wrapper = styled.section`
 		max-width: 400px;
 		border-top: 5px solid var(--primary-500);
 	}
-
+	.row-container {
+		display: flex;
+		align-items: center;
+		margin-bottom: 1rem;
+		margin-top: 1rem;
+		svg {
+			width: 7%;
+			height: 7%;
+			margin-right: 1rem;
+		}
+		.row-content {
+			display: flex;
+			flex-direction: column;
+		}
+	}
 	h3 {
 		text-align: center;
 	}
