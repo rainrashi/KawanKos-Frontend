@@ -45,6 +45,5 @@
 			"last 1 safari version"
 		]
 	},
-	"proxy": "https://kawankos-beta-backend.netlify.app/",
-	"proxy-commented": "http://localhost:7000"
+	"proxy": "http://localhost:7000"
 }
