@@ -129,6 +129,10 @@ const AppContext = React.createContext()
 const AppProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialState)
 
+	// ! ENV
+	console.log(process.env.REACT_APP_SERVER_URL)
+	console.log(process.env.NODE_ENV)
+
 	//axios setup
 	const authFetch = axios.create({
 		baseURL: 'api/v1',
