@@ -19,32 +19,10 @@ import { HiOfficeBuilding } from 'react-icons/hi'
 import { FaRegMoneyBillAlt } from 'react-icons/fa'
 
 const ProfileDetails = () => {
-	//testing
-	const initStateDeets = {
-		name: 'testName Nametest',
-		userAvatar: 'defaultAvatar',
-		userGender: 'testUserGender',
-		userAge: 25,
-		userHomeTown: 'testUserHomeTown',
-		userStatus: 'Pelajar',
-		userReligion: 'testUserReligion',
-		userJob: 'testUserJob',
-		userMajor: 'testUserMajor',
-		userBudget: 88888888,
-		userDescription: 'testUserDescription',
-		userHasLocation: false,
-		userLocation: 'testUserLocation',
-		userLocationPrice: 8888888,
-	}
-
 	const {
-		isLoading,
-		showAlert,
-		displayAlert,
 		profileDetail,
 		profileDetailId,
 		profileDetails,
-		handleChange,
 		setMessageRecipient,
 	} = useAppContext()
 
@@ -52,7 +30,7 @@ const ProfileDetails = () => {
 		profileDetail()
 	}, [profileDetailId])
 
-	let detailState = initStateDeets
+	let detailState = []
 
 	if (profileDetailId) {
 		detailState = profileDetails
@@ -230,56 +208,9 @@ const ProfileDetails = () => {
 					>
 						Kirim Pesan
 					</Link>
-
-					{/* <button
-					className="btn"
-					onClick={() => setMessageRecipient(profileDetailId)}
-				>
-					Kirim Pesan
-				</button> */}
 				</div>
 			</div>
 		</Wrapper>
 	)
 }
 export default ProfileDetails
-
-/* <h2>Nama Lengkap:</h2>
-					<h5>{name}</h5>
-
-					<h2>Jenis Kelamin:</h2>
-					<h5>{userGender}</h5>
-
-					<h2>Umur:</h2>
-					<h5>{userAge}</h5>
-
-					<h2>Agama:</h2>
-					<h5>{userReligion}</h5>
-
-					<h2>Asal Kota:</h2>
-					<h5>{userHomeTown}</h5>
-
-					<h2>Status Pelajar/Pekerja:</h2>
-					<h5>{userStatus}</h5>
-
-					{userStatus === 'Pelajar' && <h2>Jurusan:</h2>}
-					{userStatus === 'Pelajar' && <h5>{userMajor}</h5>}
-
-					{userStatus === 'Pekerja' && <h2>Pekerjaan:</h2>}
-					{userStatus === 'Pekerja' && <h5>{userJob}</h5>}
-
-					<h2>Budget:</h2>
-					<h5>Rp {userBudget}</h5>
-
-					<h2>Deskripsi pribadi:</h2>
-					<p>{userDescription}</p>
-
-					{userHasLocation && (
-						<>
-							<h2>Lokasi Indekos:</h2>
-							<p>{userLocation}</p>
-
-							<h2>Harga kamar:</h2>
-							<p>{userLocationPrice}</p>
-						</>
-					)} */

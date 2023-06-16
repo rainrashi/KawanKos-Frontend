@@ -7,8 +7,6 @@ const AllProfiles = () => {
 
 	const { userFoundPartner } = user
 
-	// console.log(userFoundPartner)
-
 	//bans user from searching if userFoundPartner
 	if (userFoundPartner) {
 		return (

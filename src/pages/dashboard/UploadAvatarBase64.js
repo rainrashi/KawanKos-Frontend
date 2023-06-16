@@ -5,7 +5,7 @@ import { useAppContext } from '../../context/appContext'
 import defaultAvatar from '../../assets/images/defaultAvatar_rekmld.jpg'
 
 const UploadAvatarBase64 = () => {
-	const { user, userAvatarNew, isLoading, updateUserAvatar } = useAppContext()
+	const { user, isLoading, updateUserAvatar } = useAppContext()
 
 	const [src, setSrc] = useState(null)
 	const [preview, setPreview] = useState(null)
@@ -51,12 +51,6 @@ const UploadAvatarBase64 = () => {
 		<div className='form-avatar'>
 			{!isChangingAvatar ? (
 				<>
-					{/* <img
-						className='img img-preview'
-						// src={userAvatar === 'defaultAvatar' ? defaultAvatar : userAvatar}
-						src={userAvatar}
-						alt=''
-					/> */}
 					{/* keep it as preview */}
 					<img
 						className='img img-preview'

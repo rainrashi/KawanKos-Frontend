@@ -1,6 +1,5 @@
 import Wrapper from '../assets/wrappers/Navbar'
 import { MdFormatAlignLeft } from 'react-icons/md'
-import { FaUserCircle } from 'react-icons/fa'
 import { IoCaretDown } from 'react-icons/io5'
 import { useAppContext } from '../context/appContext'
 import { useState } from 'react'
@@ -27,7 +26,6 @@ const Navbar = () => {
 						className='btn'
 						onClick={() => setShowLogout(!showLogout)}
 					>
-						{/* <FaUserCircle /> */}
 						{user && (
 							<img
 								className='img-avatar'

@@ -1,8 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Landing, Register, Error, ProtectedRoute } from './pages'
 import {
-	AddJob,
-	AllJobs,
 	Profile,
 	Home,
 	SharedLayout,
@@ -13,7 +11,6 @@ import {
 	InboxMessageDetail,
 	OutboxMessageDetail,
 	OutboxContainer,
-	UploadAvatar,
 } from './pages/dashboard'
 
 function App() {
@@ -32,7 +29,6 @@ function App() {
 					<Route index element={<Home />} />
 					<Route path='cari-kawankos' element={<AllProfiles />} />
 					<Route path='profile' element={<Profile />} />
-					<Route path='upload-avatar' element={<UploadAvatar />} />
 					<Route path='profile-detail' element={<ProfileDetails />} />
 					<Route path='create-message' element={<WriteMessage />} />
 					<Route path='inbox' element={<Inbox />} />
@@ -42,9 +38,6 @@ function App() {
 						path='outbox-message-detail'
 						element={<OutboxMessageDetail />}
 					/>
-					{/* Remnant from J */}
-					<Route path='all-jobs' element={<AllJobs />} />
-					<Route path='add-job' element={<AddJob />} />
 				</Route>
 				<Route path='/register' element={<Register />} />
 				<Route path='/landing' element={<Landing />} />

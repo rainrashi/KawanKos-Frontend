@@ -12,17 +12,18 @@ const Inbox = () => {
 		userInboxMessages,
 		isLoading,
 		page,
-		numOfPages,
-		totalInbox,
-		setSingleMessage,
 		isOutboxOrInbox,
+		numOfPages,
+		setSingleMessage,
+		deleteMessage,
+		totalInbox,
 	} = useAppContext()
+
+	let refreshPage = false
 
 	useEffect(() => {
 		getInbox()
-	}, [])
-
-	console.log(isOutboxOrInbox)
+	}, [refreshPage])
 
 	if (isLoading) {
 		return <Loading center />
@@ -34,6 +35,15 @@ const Inbox = () => {
 				<h1>Inbox anda kosong.</h1>
 			</Wrapper>
 		)
+	}
+
+	const deleteButton = (id) => {
+		deleteMessage(id)
+
+		setTimeout(() => {
+			getInbox()
+			refreshPage = true
+		}, 3000)
 	}
 
 	return (
@@ -79,8 +89,13 @@ const Inbox = () => {
 										>
 											Buka
 										</Link>
-										{'  '}
-										{/* <button className="btn btn-danger">Hapus</button> */}
+										<button
+											type='button'
+											className='btn btn-danger'
+											onClick={() => deleteButton(messages._id)}
+										>
+											Hapus
+										</button>
 									</td>
 								</tr>
 							)

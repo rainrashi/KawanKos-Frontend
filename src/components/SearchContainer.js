@@ -1,15 +1,10 @@
 import { FormRow, FormRowSelect } from '.'
 import { useAppContext } from '../context/appContext'
 import Wrapper from '../assets/wrappers/SearchContainer'
-import { useState, useMemo, useEffect } from 'react'
-
-// TODO cuma refresh pas filter tertentu saja
+import { useState, useMemo } from 'react'
 
 const SearchContainer = () => {
 	const [localSearch, setLocalSearch] = useState('')
-	// const [localJob, setLocalJob] = useState('')
-	// const [localMajor, setLocalMajor] = useState('')
-	// const [localHomeTown, setLocalHomeTown] = useState('')
 	const {
 		isLoading,
 		search,
@@ -31,13 +26,6 @@ const SearchContainer = () => {
 		getProfiles,
 	} = useAppContext()
 
-	// const [values, setValues] = useState()
-
-	// useEffect(() => {}, [values])
-
-	// setValues(search, searchUserHomeTown, searchUserJob, searchUserMajor)
-	// console.log(values)
-
 	const handleSearch = (e) => {
 		handleChange({ name: e.target.name, value: e.target.value })
 	}
@@ -46,6 +34,7 @@ const SearchContainer = () => {
 		setLocalSearch('')
 		clearFilters()
 	}
+
 	//debounce
 	const debounce = () => {
 		let timeoutID
@@ -57,8 +46,6 @@ const SearchContainer = () => {
 			}, 1000)
 		}
 	}
-
-	console.log(localSearch)
 
 	const optimizedDebounce = useMemo(() => debounce(), [])
 

@@ -1,9 +1,10 @@
 import Wrapper from '../../assets/wrappers/ProfileDetails'
 import { useAppContext } from '../../context/appContext'
 import foundPartnerImg from '../../assets/images/foundPartner.svg'
+import Alert from '../../components/Alert'
 
 const HowToUse = () => {
-	const { user } = useAppContext()
+	const { user, showAlert } = useAppContext()
 
 	const { userFoundPartner } = user
 
@@ -52,6 +53,9 @@ const HowToUse = () => {
 				</p>
 				<br />
 			</div>
+			<br />
+			<br />
+			{showAlert && <Alert />}
 		</Wrapper>
 	)
 }

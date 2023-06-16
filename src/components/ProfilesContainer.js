@@ -12,7 +12,6 @@ const ProfilesContainer = () => {
 		profiles,
 		isLoading,
 		page,
-		totalProfiles,
 		search,
 		searchUserStatus,
 		searchUserGender,
@@ -43,7 +42,7 @@ const ProfilesContainer = () => {
 	return (
 		<Wrapper>
 			<h5>{filteredProfiles.length} calon Kawankos ditemukan!</h5>
-			<div className="profilsingkat">
+			<div className='profilsingkat'>
 				{filteredProfiles.map((profil) => {
 					return <ProfileSingkat key={profil._id} {...profil} />
 				})}

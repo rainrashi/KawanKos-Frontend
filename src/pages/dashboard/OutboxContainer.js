@@ -10,18 +10,19 @@ const OutboxContainer = () => {
 		getOutbox,
 		userOutboxMessages,
 		isLoading,
-		page,
-		numOfPages,
 		totalOutbox,
 		setSingleMessageOutbox,
+		deleteMessage,
 		isOutboxOrInbox,
+		page,
+		numOfPages,
 	} = useAppContext()
+
+	let refreshPage = false
 
 	useEffect(() => {
 		getOutbox()
-	}, [])
-
-	console.log(userOutboxMessages)
+	}, [refreshPage])
 
 	if (isLoading) {
 		return <Loading center />
@@ -34,6 +35,17 @@ const OutboxContainer = () => {
 				<img src={placeholderSVG} alt='' className='img img-avatar' />
 			</Wrapper>
 		)
+	}
+
+	console.log(refreshPage)
+
+	const deleteButton = (id) => {
+		deleteMessage(id)
+
+		setTimeout(() => {
+			getOutbox()
+			refreshPage = true
+		}, 3000)
 	}
 
 	return (
@@ -69,7 +81,13 @@ const OutboxContainer = () => {
 												Buka
 											</Link>
 											{'  '}
-											{/* <button className='btn btn-danger'>Hapus</button> */}
+											<button
+												type='button'
+												className='btn btn-danger'
+												onClick={() => deleteButton(messages._id)}
+											>
+												Hapus
+											</button>
 										</td>
 									</tr>
 								)

@@ -27,17 +27,6 @@ import {
 	MESSAGE_DETAIL_BEGIN,
 	MESSAGE_DETAIL_SUCCESS,
 	MESSAGE_DETAIL_ERROR,
-	//remnant of j
-	CREATE_JOB_BEGIN,
-	CREATE_JOB_SUCCESS,
-	CREATE_JOB_ERROR,
-	GET_JOBS_BEGIN,
-	GET_JOBS_SUCCESS,
-	SET_EDIT_JOB,
-	DELETE_JOB_BEGIN,
-	EDIT_JOB_BEGIN,
-	EDIT_JOB_SUCCESS,
-	EDIT_JOB_ERROR,
 	GET_INBOX_BEGIN,
 	GET_INBOX_SUCCESS,
 	SET_REPLY_MESSAGE,
@@ -47,9 +36,8 @@ import {
 	OUTBOX_DETAIL_BEGIN,
 	OUTBOX_DETAIL_SUCCESS,
 	OUTBOX_DETAIL_ERROR,
-	UPLOADING_AVATAR_BEGIN,
-	UPLOADING_AVATAR_SUCCESS,
-	UPLOADING_AVATAR_ERROR,
+	DELETE_MESSAGE_BEGIN,
+	DELETE_MESSAGE_ERROR,
 } from './actions'
 import { initialState } from './appContext'
 
@@ -84,8 +72,6 @@ const reducer = (state, action) => {
 			isLoading: false,
 			token: action.payload.token,
 			user: action.payload.user,
-			// userLocation: action.payload.location,
-			// jobLocation: action.payload.location,
 			showAlert: true,
 			alertType: 'success',
 			alertText: action.payload.alertText,
@@ -114,8 +100,20 @@ const reducer = (state, action) => {
 			...initialState,
 			token: null,
 			user: null,
-			userLocation: '',
-			jobLocation: '',
+		}
+	}
+
+	//get all profiles
+	if (action.type === GET_PROFILES_BEGIN) {
+		return { ...state, isLoading: true, showAlert: false }
+	}
+	if (action.type === GET_PROFILES_SUCCESS) {
+		return {
+			...state,
+			isLoading: false,
+			profiles: action.payload.profiles,
+			totalProfiles: action.payload.totalProfiles,
+			numOfPages: action.payload.numOfPages,
 		}
 	}
 
@@ -135,8 +133,6 @@ const reducer = (state, action) => {
 			isLoading: false,
 			token: action.payload.token,
 			user: action.payload.user,
-			// userLocation: action.payload.location,
-			// jobLocation: action.payload.location,
 			showAlert: true,
 			alertType: 'success',
 			alertText: action.payload.msg,
@@ -162,7 +158,6 @@ const reducer = (state, action) => {
 	}
 
 	//clear button
-	// TODO UPDATE DENGAN SITUASI APLIKASI
 	if (action.type === CLEAR_VALUES) {
 		const initialState = {
 			//message
@@ -171,15 +166,6 @@ const reducer = (state, action) => {
 			messageTitle: '',
 			messageContent: '',
 			messageReplyTo: '',
-
-			// * Remnant of J
-			/* isEditing: false,
-			editJobId: '',
-			position: '',
-			company: '',
-			jobLocation: state.userLocation,
-			jobType: 'full-time',
-			status: 'pending', */
 		}
 		return { ...state, ...initialState }
 	}
@@ -347,35 +333,8 @@ const reducer = (state, action) => {
 		}
 	}
 
-	// TODO Single Message (outbox included trial)
-	// Outbox trial failed, return to only inbox
+	// Single Message
 	if (action.type === SET_MESSAGE_DETAILS) {
-		/* const messageType = state.isOutboxOrInbox
-
-		if (messageType === 'inbox') {
-			const message = state.userInboxMessages.find(
-				(message) => message._id === action.payload.id
-			)
-			const { _id } = message
-			return {
-				...state,
-				messageInboxDetailsId: _id,
-				messageInboxDetails: message,
-				// messageInboxDetailsId: action.payload.id,
-			}
-		} else if (messageType === 'outbox') {
-			const message = state.userOutboxMessages.find(
-				(message) => message._id === action.payload.id
-			)
-			const { _id } = message
-			return {
-				...state,
-				messageOutboxDetailsId: _id,
-				messageOutboxDetails: message,
-				// messageOutboxDetailsId: action.payload.id,
-			}
-		} */
-
 		const message = state.userInboxMessages.find(
 			(message) => message._id === action.payload.id
 		)
@@ -384,29 +343,12 @@ const reducer = (state, action) => {
 			...state,
 			messageInboxDetailsId: _id,
 			messageInboxDetails: message,
-			// messageInboxDetailsId: action.payload.id,
 		}
 	}
 	if (action.type === MESSAGE_DETAIL_BEGIN) {
 		return { ...state, isLoading: true, showAlert: false }
 	}
 	if (action.type === MESSAGE_DETAIL_SUCCESS) {
-		/* const messageType = state.isOutboxOrInbox
-
-		if (messageType === 'inbox') {
-			return {
-				...state,
-				isLoading: false,
-				messageInboxDetails: action.payload.messageInboxDetails,
-			}
-		} else if (messageType === 'outbox') {
-			return {
-				...state,
-				isLoading: false,
-				messageOutboxDetails: action.payload.messageOutboxDetails,
-			}
-		} */
-
 		return {
 			...state,
 			isLoading: false,
@@ -423,7 +365,7 @@ const reducer = (state, action) => {
 		}
 	}
 
-	// TODO Detail message Outbox
+	// Detail message Outbox
 	if (action.type === SET_OUTBOX_DETAILS) {
 		const message = state.userOutboxMessages.find(
 			(message) => message._id === action.payload.id
@@ -438,7 +380,6 @@ const reducer = (state, action) => {
 			messageFrom,
 			messageTo,
 			messageContent,
-			// messageOutboxDetailsId: action.payload.id,
 		}
 	}
 	if (action.type === OUTBOX_DETAIL_BEGIN) {
@@ -461,7 +402,26 @@ const reducer = (state, action) => {
 		}
 	}
 
-	// TODO Search
+	if (action.type === DELETE_MESSAGE_BEGIN) {
+		return {
+			...state,
+			isLoading: true,
+			showAlert: true,
+			alertType: 'success',
+			alertText: 'Pesan sedang dihapus... tunggu sebentar',
+		}
+	}
+	if (action.type === DELETE_MESSAGE_ERROR) {
+		return {
+			...state,
+			isLoading: false,
+			showAlert: true,
+			alertType: 'danger',
+			alertText: action.payload.msg,
+		}
+	}
+
+	// Search
 	if (action.type === CLEAR_FILTERS) {
 		return {
 			...state,
@@ -479,141 +439,6 @@ const reducer = (state, action) => {
 	//ganti halaman
 	if (action.type === CHANGE_PAGE) {
 		return { ...state, page: action.payload.page }
-	}
-
-	//upload alert
-	if (action.type === UPLOADING_AVATAR_BEGIN) {
-		return {
-			...state,
-			showAlert: true,
-			isLoading: true,
-			alertType: 'danger',
-			alertText: 'Sedang upload gambar profil....',
-		}
-	}
-	if (action.type === UPLOADING_AVATAR_SUCCESS) {
-		return {
-			...state,
-			showAlert: true,
-			isLoading: false,
-			alertType: 'success',
-			alertText: 'Berhasil upload gambar profil!',
-			userAvatarNew: action.payload.userAvatarNew,
-		}
-	}
-	if (action.type === UPLOADING_AVATAR_ERROR) {
-		return {
-			...state,
-			showAlert: true,
-			isLoading: false,
-			alertType: 'danger',
-			alertText: action.payload.msg,
-		}
-	}
-
-	//* Remnants of J
-
-	//create job
-	if (action.type === CREATE_JOB_BEGIN) {
-		return { ...state, isLoading: true }
-	}
-
-	if (action.type === CREATE_JOB_SUCCESS) {
-		return {
-			...state,
-			isLoading: false,
-			showAlert: true,
-			alertType: 'success',
-			alertText: 'New Job Created!',
-		}
-	}
-
-	if (action.type === CREATE_JOB_ERROR) {
-		return {
-			...state,
-			isLoading: false,
-			showAlert: true,
-			alertType: 'danger',
-			alertText: action.payload.msg,
-		}
-	}
-
-	//get all profiles
-	if (action.type === GET_PROFILES_BEGIN) {
-		return { ...state, isLoading: true, showAlert: false }
-	}
-	if (action.type === GET_PROFILES_SUCCESS) {
-		return {
-			...state,
-			isLoading: false,
-			profiles: action.payload.profiles,
-			totalProfiles: action.payload.totalProfiles,
-			numOfPages: action.payload.numOfPages,
-		}
-	}
-
-	//get all jobs
-	if (action.type === GET_JOBS_BEGIN) {
-		return { ...state, isLoading: true, showAlert: false }
-	}
-	if (action.type === GET_JOBS_SUCCESS) {
-		return {
-			...state,
-			isLoading: false,
-			jobs: action.payload.jobs,
-			totalJobs: action.payload.totalJobs,
-			numOfPages: action.payload.numOfPages,
-		}
-	}
-
-	//edit job
-	if (action.type === SET_EDIT_JOB) {
-		const job = state.jobs.find((job) => job._id === action.payload.id)
-		const { _id, position, company, jobLocation, jobType, status } = job
-		return {
-			...state,
-			isEditing: true,
-			editJobId: _id,
-			position,
-			company,
-			jobLocation,
-			jobType,
-			status,
-		}
-	}
-
-	//delete job
-	if (action.type === DELETE_JOB_BEGIN) {
-		return {
-			...state,
-			isLoading: true,
-		}
-	}
-
-	//editjob
-	if (action.type === EDIT_JOB_BEGIN) {
-		return {
-			...state,
-			isLoading: true,
-		}
-	}
-	if (action.type === EDIT_JOB_SUCCESS) {
-		return {
-			...state,
-			isLoading: false,
-			showAlert: true,
-			alertType: 'success',
-			alertText: 'Job Updated!',
-		}
-	}
-	if (action.type === EDIT_JOB_ERROR) {
-		return {
-			...state,
-			isLoading: false,
-			showAlert: true,
-			alertType: 'danger',
-			alertText: action.payload.msg,
-		}
 	}
 
 	throw new Error(`no such action ${action.type}`)

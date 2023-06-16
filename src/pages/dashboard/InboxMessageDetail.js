@@ -6,23 +6,9 @@ import defaultAvatar from '../../assets/images/defaultAvatar_rekmld.jpg'
 
 //icons
 //icons import
-import {
-	MdDescription,
-	MdOutlineHomeWork,
-	MdPermIdentity,
-	MdShareLocation,
-	MdTitle,
-} from 'react-icons/md'
-import {
-	BiCalendarStar,
-	BiMaleFemale,
-	BiMessageSquareDetail,
-} from 'react-icons/bi'
-import { BsStars } from 'react-icons/bs'
-import { SiHomeadvisor } from 'react-icons/si'
-import { IoPricetag, IoSchool } from 'react-icons/io5'
-import { HiOfficeBuilding } from 'react-icons/hi'
-import { FaRegMoneyBillAlt, FaFeatherAlt } from 'react-icons/fa'
+import { MdTitle } from 'react-icons/md'
+import { BiMessageSquareDetail } from 'react-icons/bi'
+import { FaFeatherAlt } from 'react-icons/fa'
 
 const InboxMessageDetail = () => {
 	const {
@@ -38,17 +24,6 @@ const InboxMessageDetail = () => {
 	}, [messageInboxDetailsId])
 
 	let senderId = messageInboxDetails.messageFrom._id
-	console.log(messageInboxDetails)
-	// const {
-	// 	messageTo,
-	// 	messageFrom,
-	// 	messageTitle,
-	// 	messageContent,
-	// 	messageReplyTo,
-	// 	messageSeen,
-	// } = messageInboxDetails
-
-	// console.log(messageInboxDetails)
 
 	return (
 		<Wrapper>

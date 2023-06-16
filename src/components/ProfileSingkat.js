@@ -1,10 +1,4 @@
-import moment from 'moment'
-import {
-	FaLocationArrow,
-	FaBriefcase,
-	FaCalendarAlt,
-	FaRegMoneyBillAlt,
-} from 'react-icons/fa'
+import { FaRegMoneyBillAlt } from 'react-icons/fa'
 import { BiCalendarStar, BiMaleFemale } from 'react-icons/bi'
 import { SiHomeadvisor } from 'react-icons/si'
 import { Link } from 'react-router-dom'
@@ -13,7 +7,6 @@ import Wrapper from '../assets/wrappers/ProfilSingkat'
 import ProfileSingkatInfo from './ProfileSingkatInfo'
 import defaultAvatar from '../assets/images/defaultAvatar_rekmld.jpg'
 
-//Profil singkat yang tampil pas di cari kawankos
 const ProfileSingkat = ({
 	_id,
 	name,
@@ -27,20 +20,12 @@ const ProfileSingkat = ({
 	userJob,
 	userMajor,
 	userHasLocation,
-	userLocation,
-	userLocationPrice,
-	createdAt,
 }) => {
-	const { user, setProfileDetail } = useAppContext()
-	// const isCurrentUser = user && user._id === _id
-	// if (isCurrentUser) {
-	// 	return null
-	// }
+	const { setProfileDetail } = useAppContext()
 
 	return (
 		<Wrapper>
 			<header>
-				{/* <div className="main-icon">{name.charAt(0)}</div> */}
 				<img
 					src={userAvatar === 'defaultAvatar' ? defaultAvatar : userAvatar}
 					alt='avatar'
@@ -76,34 +61,16 @@ const ProfileSingkat = ({
 						text={userBudget}
 						userBudget={true}
 					/>
-					{/* <div className={`status ${status}`}>{status}</div> */}
 				</div>
 				<footer>
 					<div className='actions'>
 						<Link
-							// ! DETAIL PROFIL
 							to='/profile-detail'
 							className='btn'
 							onClick={() => setProfileDetail(_id)}
 						>
 							Detail Profil
 						</Link>
-
-						{/* <button>Detail Profil</button> */}
-						{/* <Link
-							to="/add-job"
-							className="btn edit-btn"
-							onClick={() => setEditJob(_id)}
-						>
-							Edit
-						</Link>
-						<button
-							type="button"
-							className="btn delete-btn"
-							onClick={() => deleteJob(_id)}
-						>
-							Hapus
-						</button> */}
 					</div>
 				</footer>
 			</div>

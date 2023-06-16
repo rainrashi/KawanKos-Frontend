@@ -15,16 +15,6 @@ import {
 	UPDATE_USER_SUCCESS,
 	HANDLE_CHANGE,
 	CLEAR_VALUES,
-	CREATE_JOB_BEGIN,
-	CREATE_JOB_SUCCESS,
-	CREATE_JOB_ERROR,
-	GET_JOBS_BEGIN,
-	GET_JOBS_SUCCESS,
-	SET_EDIT_JOB,
-	DELETE_JOB_BEGIN,
-	EDIT_JOB_BEGIN,
-	EDIT_JOB_SUCCESS,
-	EDIT_JOB_ERROR,
 	CLEAR_FILTERS,
 	GET_PROFILES_BEGIN,
 	GET_PROFILES_SUCCESS,
@@ -50,14 +40,12 @@ import {
 	OUTBOX_DETAIL_BEGIN,
 	OUTBOX_DETAIL_SUCCESS,
 	OUTBOX_DETAIL_ERROR,
-	UPLOADING_AVATAR_BEGIN,
-	UPLOADING_AVATAR_SUCCESS,
-	UPLOADING_AVATAR_ERROR,
+	DELETE_MESSAGE_BEGIN,
+	DELETE_MESSAGE_ERROR,
 } from './actions'
 
 const token = localStorage.getItem('token')
 const user = localStorage.getItem('user')
-// const userLocation = localStorage.getItem('location')
 
 const initialState = {
 	// * init
@@ -109,11 +97,6 @@ const initialState = {
 	],
 	userReligion: 'Lainnya',
 	userHasLocationOptions: ['ya', 'tidak'],
-	// userDescription: '',
-	// userAvatar: 'defaultAvatar',
-	// userAge: 18,
-	// userMajor: '',
-	// userBudget: 500000,
 	// * Profile details
 	profileDetailId: '',
 	profileDetails: [],
@@ -138,21 +121,7 @@ const initialState = {
 	messageTitle: '',
 	messageContent: '',
 	messageReplyTo: '',
-	//avatarUploadURL
 	userAvatarNew: '',
-	// * Remnants of J
-	editJobId: '',
-	position: '',
-	company: '',
-	// userLocation: userLocation || '',
-	// showLocation: false,
-	jobs: [],
-	totalJobs: 0,
-	jobLocation: '',
-	jobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
-	jobType: 'full-time',
-	statusOptions: ['interview', 'declined', 'pending'],
-	status: 'pending',
 }
 
 const AppContext = React.createContext()
@@ -167,17 +136,6 @@ const AppProvider = ({ children }) => {
 			Authorization: `Bearer ${state.token}`,
 		},
 	})
-
-	//request interceptor
-	/* authFetch.interceptors.request.use(
-    (config) => {
-      config.headers.common['Authorization'] = `Bearer ${state.token}`
-      return config
-    },
-    (error) => {
-      return Promise.reject(error)
-    }
-  ) */
 
 	//response interceptor
 	authFetch.interceptors.response.use(
@@ -207,26 +165,21 @@ const AppProvider = ({ children }) => {
 	const addUserToLocalStorage = ({ user, token }) => {
 		localStorage.setItem('user', JSON.stringify(user))
 		localStorage.setItem('token', JSON.stringify(token))
-		// localStorage.setItem('location', JSON.stringify(location))
 	}
 	const removeUserFromLocalStorage = () => {
 		localStorage.removeItem('user')
 		localStorage.removeItem('token')
-		// localStorage.removeItem('location')
 	}
 
 	const setupUser = async ({ currentUser, endPoint, alertText }) => {
 		dispatch({ type: SETUP_USER_BEGIN })
 		try {
 			const response = await axios.post(`/api/v1/auth/${endPoint}`, currentUser)
-			// const { user, token, location } = response.data
 			const { user, token } = response.data
 			dispatch({
 				type: SETUP_USER_SUCCESS,
-				// payload: { user, token, location, alertText },
 				payload: { user, token, alertText },
 			})
-			// addUserToLocalStorage({ user, token, location })
 			addUserToLocalStorage({ user, token })
 		} catch (error) {
 			dispatch({
@@ -253,15 +206,12 @@ const AppProvider = ({ children }) => {
 		try {
 			const { data } = await authFetch.patch('/auth/updateUser', currentUser)
 
-			// const { user, location, token } = data
 			const { user, token } = data
 
 			dispatch({
 				type: UPDATE_USER_SUCCESS,
-				// payload: { user, location, token },
 				payload: { user, token, msg: 'Pembaruan Biodata Kamu Berhasil!' },
 			})
-			// addUserToLocalStorage({ user, token, location })
 			addUserToLocalStorage({ user, token })
 		} catch (error) {
 			if (error.response.status !== 401) {
@@ -282,7 +232,6 @@ const AppProvider = ({ children }) => {
 				currentUser
 			)
 
-			// const { user, location, token } = data
 			const { user, token } = data
 			const { userFoundPartner } = user
 
@@ -296,14 +245,12 @@ const AppProvider = ({ children }) => {
 
 			dispatch({
 				type: UPDATE_USER_SUCCESS,
-				// payload: { user, location, token },
 				payload: {
 					user,
 					token,
 					msg: message,
 				},
 			})
-			// addUserToLocalStorage({ user, token, location })
 			addUserToLocalStorage({ user, token })
 		} catch (error) {
 			if (error.response.status !== 401) {
@@ -334,20 +281,6 @@ const AppProvider = ({ children }) => {
 			searchUserHasLocation,
 			sort,
 		} = state
-		// let url = `/profiles?page=${page}&userStatus=${searchUserStatus}&userGender=${searchUserGender}&userReligion=${searchUserReligion}&userHasLocation=${searchUserHasLocation}&sort=${sort}`
-
-		// if (search) {
-		// 	url = url + `&search=${search}`
-		// }
-		// if (searchUserHomeTown) {
-		// 	url = url + `&userHomeTown=${searchUserHomeTown}`
-		// }
-		// if (searchUserJob) {
-		// 	url = url + `&userJob=${searchUserJob}`
-		// }
-		// if (searchUserMajor) {
-		// 	url = url + `&userMajor=${searchUserMajor}`
-		// }
 
 		const queryParams = {
 			page,
@@ -388,7 +321,6 @@ const AppProvider = ({ children }) => {
 			})
 		} catch (error) {
 			console.log(error.response)
-			// * logoutUser()
 		}
 		clearAlert()
 	}
@@ -478,7 +410,7 @@ const AppProvider = ({ children }) => {
 		clearAlert()
 	}
 
-	// TODO Outbox
+	//  Outbox
 	const getOutbox = async () => {
 		let url = `/messages/outbox`
 
@@ -501,37 +433,13 @@ const AppProvider = ({ children }) => {
 		clearAlert()
 	}
 
-	// TODO Single Message View, OUtbox trial failed, pisah aja
+	//  Single Message View
 	const setSingleMessage = (id) => {
 		dispatch({ type: SET_MESSAGE_DETAILS, payload: { id } })
 	}
 	const getSingleMessageDetail = async () => {
-		// const messageType = state.isOutboxOrInbox
 		dispatch({ type: MESSAGE_DETAIL_BEGIN })
 		try {
-			/* if (messageType === 'inbox') {
-				const { data } = await authFetch.get(
-					`messages/${state.messageInboxDetailsId}`
-				)
-				const { messageInboxDetails } = data
-				dispatch({
-					type: MESSAGE_DETAIL_SUCCESS,
-					payload: {
-						messageInboxDetails,
-					},
-				})
-			} else if (messageType === 'outbox') {
-				const { data } = await authFetch.get(
-					`messages/${state.messageOutboxDetailsId}`
-				)
-				const { messageOutboxDetails } = data
-				dispatch({
-					type: MESSAGE_DETAIL_SUCCESS,
-					payload: {
-						messageOutboxDetails,
-					},
-				})
-			} */
 			const { data } = await authFetch.get(
 				`messages/${state.messageInboxDetailsId}`
 			)
@@ -552,7 +460,7 @@ const AppProvider = ({ children }) => {
 		clearAlert()
 	}
 
-	// TODO outbox single message
+	// outbox single message
 	const setSingleMessageOutbox = (id) => {
 		dispatch({ type: SET_OUTBOX_DETAILS, payload: { id } })
 	}
@@ -579,7 +487,22 @@ const AppProvider = ({ children }) => {
 		clearAlert()
 	}
 
-	// TODO Set Reply
+	//delete message
+	const deleteMessage = async (messageId) => {
+		dispatch({ type: DELETE_MESSAGE_BEGIN })
+		try {
+			await authFetch.delete(`messages/${messageId}`)
+		} catch (error) {
+			if (error.response.status === 401) return
+			dispatch({
+				type: DELETE_MESSAGE_ERROR,
+				payload: { msg: error.response.data.msg },
+			})
+		}
+		clearAlert()
+	}
+
+	//  Set Reply
 	const setReplyMessage = (id) => {
 		dispatch({ type: SET_REPLY_MESSAGE, payload: { id } })
 	}
@@ -599,36 +522,6 @@ const AppProvider = ({ children }) => {
 	//pagination - change page
 	const changePage = (page) => {
 		dispatch({ type: CHANGE_PAGE, payload: { page } })
-	}
-
-	//avatar with backend
-	//! did not work but save it here for legacy
-	const changeAvatar = async (avatarData) => {
-		dispatch({ type: UPLOADING_AVATAR_BEGIN })
-		try {
-			// const { userAvatarNew } = state
-			// ambil file
-			const file = avatarData
-			let formData = new FormData()
-			formData.append('avatar', file)
-
-			//upload ke cloud
-			const res = await authFetch.post('/uploads', formData, {
-				headers: {
-					'content-type': 'multipart/form-data',
-				},
-			})
-			// userAvatarNew = res.data.url
-			dispatch({ type: UPLOADING_AVATAR_SUCCESS, payload: res.data.url })
-			// console.log(res.data.url)
-			// console.log(userAvatarNew)
-		} catch (error) {
-			dispatch({
-				type: UPLOADING_AVATAR_ERROR,
-				payload: { msg: error.response.data.msg },
-			})
-			console.log('upload gagal')
-		}
 	}
 
 	//updateUserAvatar
@@ -659,90 +552,6 @@ const AppProvider = ({ children }) => {
 		}
 	}
 
-	// * Remnants of J
-	//create job
-	const createJob = async () => {
-		dispatch({ type: CREATE_JOB_BEGIN })
-		try {
-			const { position, company, jobLocation, jobType, status } = state
-			await authFetch.post('/jobs', {
-				position,
-				company,
-				jobLocation,
-				jobType,
-				status,
-			})
-			dispatch({ type: CREATE_JOB_SUCCESS })
-			dispatch({ type: CLEAR_VALUES })
-		} catch (error) {
-			if (error.response.status === 401) return
-			dispatch({
-				type: CREATE_JOB_ERROR,
-				payload: { msg: error.response.data.msg },
-			})
-		}
-		clearAlert()
-	}
-
-	const getJobs = async () => {
-		let url = `/jobs`
-
-		dispatch({ type: GET_JOBS_BEGIN })
-		try {
-			const { data } = await authFetch(url)
-			const { jobs, totalJobs, numOfPages } = data
-			dispatch({
-				type: GET_JOBS_SUCCESS,
-				payload: {
-					jobs,
-					totalJobs,
-					numOfPages,
-				},
-			})
-		} catch (error) {
-			console.log(error.response)
-			logoutUser()
-		}
-		clearAlert()
-	}
-
-	//edit job
-	const setEditJob = (id) => {
-		dispatch({ type: SET_EDIT_JOB, payload: { id } })
-	}
-	const editJob = async () => {
-		dispatch({ type: EDIT_JOB_BEGIN })
-		try {
-			const { position, company, jobLocation, jobType, status } = state
-			await authFetch.patch(`/jobs/${state.editJobId}`, {
-				company,
-				position,
-				jobLocation,
-				jobType,
-				status,
-			})
-			dispatch({ type: EDIT_JOB_SUCCESS })
-			dispatch({ type: CLEAR_VALUES })
-		} catch (error) {
-			if (error.response.status === 401) return
-			dispatch({
-				type: EDIT_JOB_ERROR,
-				payload: { msg: error.response.data.msg },
-			})
-		}
-		clearAlert()
-	}
-
-	const deleteJob = async (jobId) => {
-		dispatch({ type: DELETE_JOB_BEGIN })
-		try {
-			await authFetch.delete(`/jobs/${jobId}`)
-			getJobs()
-		} catch (error) {
-			console.log(error.response)
-		}
-	}
-
 	return (
 		<AppContext.Provider
 			value={{
@@ -754,11 +563,6 @@ const AppProvider = ({ children }) => {
 				updateUser,
 				handleChange,
 				clearValues,
-				createJob,
-				getJobs,
-				setEditJob,
-				deleteJob,
-				editJob,
 				getProfiles,
 				clearFilters,
 				changePage,
@@ -774,8 +578,8 @@ const AppProvider = ({ children }) => {
 				getOutbox,
 				setSingleMessageOutbox,
 				getSingleMessageDetailOutbox,
-				changeAvatar,
 				updateUserAvatar,
+				deleteMessage,
 			}}
 		>
 			{children}

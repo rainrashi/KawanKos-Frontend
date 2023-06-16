@@ -8,7 +8,6 @@ import {
 } from 'react-icons/md'
 import { SiHomeadvisor } from 'react-icons/si'
 import { HiOfficeBuilding } from 'react-icons/hi'
-import { TfiWrite } from 'react-icons/tfi'
 import { IoSchool } from 'react-icons/io5'
 import { BiRename } from 'react-icons/bi'
 

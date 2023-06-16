@@ -1,4 +1,4 @@
-import { useState, useRef, useReducer } from 'react'
+import { useState } from 'react'
 import {
 	FormRow,
 	Alert,
@@ -9,34 +9,8 @@ import {
 import { useAppContext } from '../../context/appContext'
 import Wrapper from '../../assets/wrappers/DashboardFormPage'
 import dangerImg from '../../assets/images/danger.svg'
-import { Link } from 'react-router-dom'
-import defaultAvatar from '../../assets/images/defaultAvatar_rekmld.jpg'
 
-//icons import
-import {
-	MdDescription,
-	MdOutlineHomeWork,
-	MdPermIdentity,
-	MdShareLocation,
-} from 'react-icons/md'
-import { BiCalendarStar, BiMaleFemale } from 'react-icons/bi'
-import { BsStars } from 'react-icons/bs'
-import { SiHomeadvisor } from 'react-icons/si'
-import { IoPricetag, IoSchool } from 'react-icons/io5'
-import { HiOfficeBuilding } from 'react-icons/hi'
-import { FaRegMoneyBillAlt } from 'react-icons/fa'
-import { AiFillPicture } from 'react-icons/ai'
-
-// ! for upload avatar, might move later
-import {
-	UPLOADING_AVATAR_BEGIN,
-	UPLOADING_AVATAR_SUCCESS,
-	UPLOADING_AVATAR_ERROR,
-} from '../../context/actions'
-import reducer from '../../context/reducer'
-import axios from 'axios'
-
-//! upload avatar alternative
+// upload avatar
 import UploadAvatarBase64 from './UploadAvatarBase64'
 
 const Profile = () => {
@@ -50,9 +24,6 @@ const Profile = () => {
 		userStatusOptions,
 		userReligionOptions,
 		updateUserFoundPartner,
-		userAvatarNew,
-		// token,
-		changeAvatar,
 	} = useAppContext()
 
 	const [formData, setFormData] = useState({
@@ -120,18 +91,6 @@ const Profile = () => {
 		}))
 	}
 
-	// TODO AVATAR
-	// const inputFile = useRef(null)
-	// const handleAvatar = () => {
-	// 	inputFile.current.click()
-	// }
-	// const inputAvatar = (e) => {
-	// 	e.preventDefault()
-	// 	const selectedAvatar = e.target.files[0]
-	// 	setAvatar(selectedAvatar)
-	// 	changeAvatar(avatar)
-	// }
-
 	return (
 		<Wrapper>
 			<form className='form' onSubmit={handleSubmit}>
@@ -143,18 +102,6 @@ const Profile = () => {
 					<label htmlFor='userAvatar'>Gambar Profil:</label>
 					<UploadAvatarBase64 />
 
-					{/* <Link to='/upload-avatar'>
-						<div className='avatar-area'>
-							<img
-								src={
-									formData.userAvatar === 'defaultAvatar'
-										? defaultAvatar
-										: formData.userAvatar
-								}
-								className='img-avatar'
-							/>
-						</div>
-					</Link> */}
 					{/* biodata lain */}
 
 					<FormRow
@@ -186,6 +133,7 @@ const Profile = () => {
 						labelText='Umur Anda'
 						value={formData.userAge}
 						handleChange={handleChange}
+						min='18'
 						required
 					/>
 					<FormRow
@@ -371,19 +319,6 @@ const Profile = () => {
 						</button>
 					</>
 				)}
-
-				{/* <button
-					className='btn btn-danger btn-block'
-					type='button'
-					disabled={isLoading}
-					onClick={handleFoundButton}
-				>
-					{isLoading
-						? 'Tunggu sebentar...'
-						: formData.userFoundPartner
-						? 'Iya, aku ingin mencari KawanKos lagi!'
-						: 'Sudah mendapatkan KawanKos!'}
-				</button> */}
 			</div>
 		</Wrapper>
 	)
