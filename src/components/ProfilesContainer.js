@@ -17,6 +17,7 @@ const ProfilesContainer = () => {
 		searchUserGender,
 		sort,
 		numOfPages,
+		totalProfiles,
 	} = useAppContext()
 
 	useEffect(() => {
@@ -41,7 +42,7 @@ const ProfilesContainer = () => {
 
 	return (
 		<Wrapper>
-			<h5>{filteredProfiles.length} calon Kawankos ditemukan!</h5>
+			<h5>{totalProfiles * numOfPages} calon Kawankos ditemukan!</h5>
 			<div className='profilsingkat'>
 				{filteredProfiles.map((profil) => {
 					return <ProfileSingkat key={profil._id} {...profil} />
