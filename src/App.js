@@ -1,9 +1,23 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Landing, Register, Error, ProtectedRoute } from './pages'
+import {
+	Landing,
+	Register,
+	Error,
+	ProtectedRoute,
+	AdminPanel,
+	AdminDoor,
+} from './pages'
+import {
+	AdminMessageDetail,
+	AdminUserDetail,
+	MessagesPanel,
+	UsersPanel,
+} from './pages/superpanel'
 import {
 	Profile,
 	Home,
 	SharedLayout,
+	SharedLayoutAdmin,
 	AllProfiles,
 	ProfileDetails,
 	Inbox,
@@ -39,6 +53,27 @@ function App() {
 						element={<OutboxMessageDetail />}
 					/>
 				</Route>
+
+				{/* ADMIN */}
+				<Route path='/superpanel'>
+					<Route index element={<AdminDoor />} />
+					<Route
+						path='central-dogma'
+						/* element={
+							<ProtectedRoute>
+								<SharedLayoutAdmin />
+							</ProtectedRoute>
+						} */
+					>
+						<Route index element={<AdminPanel />} />
+						<Route
+							path='adm-message-details'
+							element={<AdminMessageDetail />}
+						/>
+						<Route path='adm-profile-details' element={<AdminUserDetail />} />
+					</Route>
+				</Route>
+
 				<Route path='/register' element={<Register />} />
 				<Route path='/landing' element={<Landing />} />
 				<Route path='*' element={<Error />} />

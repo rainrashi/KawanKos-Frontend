@@ -9,6 +9,7 @@ import InboxMessageDetail from './InboxMessageDetail'
 import OutboxContainer from './OutboxContainer'
 import OutboxMessageDetail from './OutboxMessageDetail'
 import HowToUse from './HowToUse'
+import SharedLayoutAdmin from './SharedLayoutAdmin'
 
 export {
 	Profile,
@@ -22,4 +23,5 @@ export {
 	OutboxContainer,
 	OutboxMessageDetail,
 	HowToUse,
+	SharedLayoutAdmin,
 }

@@ -41,7 +41,17 @@ import {
 	OUTBOX_DETAIL_SUCCESS,
 	OUTBOX_DETAIL_ERROR,
 	DELETE_MESSAGE_BEGIN,
+	DELETE_MESSAGE_SUCCESS,
 	DELETE_MESSAGE_ERROR,
+	GET_ALL_MESSAGES_BEGIN,
+	GET_ALL_MESSAGES_SUCCESS,
+	SET_MESSAGE_ADM_DETAILS,
+	MESSAGE_DETAIL_ADM_BEGIN,
+	MESSAGE_DETAIL_ADM_SUCCESS,
+	MESSAGE_DETAIL_ADM_ERROR,
+	DELETE_PROFILE_ADM_BEGIN,
+	DELETE_PROFILE_ADM_ERROR,
+	DELETE_PROFILE_ADM_SUCCESS,
 } from './actions'
 
 const token = localStorage.getItem('token')
@@ -62,6 +72,8 @@ const initialState = {
 	// * pagination
 	numOfPages: 1,
 	page: 1,
+	numOfPagesMsg: 1,
+	pageMsg: 1,
 	// * search n options + init
 	search: '',
 	searchUserJob: '',
@@ -123,6 +135,10 @@ const initialState = {
 	isReplying: false,
 	isReplyingTo: [],
 	isReplyingToId: '',
+	totalMessages: 0,
+	allMessages: [],
+	messageDetailsId: '',
+	messageDetails: [],
 	// * Message init
 	messageTo: '',
 	messageFrom: '',
@@ -291,6 +307,8 @@ const AppProvider = ({ children }) => {
 			sort,
 		} = state
 
+		const reqTimeStamp = new Date().getTime()
+
 		const queryParams = {
 			page,
 			userStatus: searchUserStatus,
@@ -298,6 +316,7 @@ const AppProvider = ({ children }) => {
 			userReligion: searchUserReligion,
 			userHasLocation: searchUserHasLocation,
 			userLocationArea: searchUserLocationArea,
+			timestamp: reqTimeStamp,
 			sort,
 		}
 
@@ -399,7 +418,7 @@ const AppProvider = ({ children }) => {
 
 	// Inbox
 	const getInbox = async () => {
-		let url = `/messages`
+		let url = `/messages?timestamp=` + new Date().getTime()
 
 		dispatch({ type: GET_INBOX_BEGIN })
 		try {
@@ -422,7 +441,7 @@ const AppProvider = ({ children }) => {
 
 	//  Outbox
 	const getOutbox = async () => {
-		let url = `/messages/outbox`
+		let url = `/messages/outbox?timestamp=` + new Date().getTime()
 
 		dispatch({ type: GET_OUTBOX_BEGIN })
 		try {
@@ -439,6 +458,30 @@ const AppProvider = ({ children }) => {
 		} catch (error) {
 			console.log(error.response)
 			logoutUser()
+		}
+		clearAlert()
+	}
+
+	//ALL Messages
+	const getAllMessages = async () => {
+		let url = `messages?timestamp=` + new Date().getTime()
+
+		dispatch({ type: GET_ALL_MESSAGES_BEGIN })
+		try {
+			const { data } = await authFetch(url)
+			const { totalMessages, allMessages, numOfPages } = data
+
+			dispatch({
+				type: GET_ALL_MESSAGES_SUCCESS,
+				payload: {
+					totalMessages,
+					allMessages,
+					numOfPages,
+				},
+			})
+		} catch (error) {
+			console.log(error.response)
+			// logoutUser()
 		}
 		clearAlert()
 	}
@@ -497,15 +540,57 @@ const AppProvider = ({ children }) => {
 		clearAlert()
 	}
 
+	//setsinglemessage admin
+	const setSingleMessageAdm = (id) => {
+		dispatch({ type: SET_MESSAGE_ADM_DETAILS, payload: { id } })
+	}
+	const getSingleMessageDetailAdm = async () => {
+		dispatch({ type: MESSAGE_DETAIL_ADM_BEGIN })
+		try {
+			const { data } = await authFetch.get(`messages/${state.messageDetailsId}`)
+			const { messageDetails } = data
+			dispatch({
+				type: MESSAGE_DETAIL_ADM_SUCCESS,
+				payload: {
+					messageDetails,
+				},
+			})
+		} catch (error) {
+			if (error.response.status === 401) return
+			dispatch({
+				type: MESSAGE_DETAIL_ADM_ERROR,
+				payload: { msg: error.response.data.msg },
+			})
+		}
+		clearAlert()
+	}
+
 	//delete message
 	const deleteMessage = async (messageId) => {
 		dispatch({ type: DELETE_MESSAGE_BEGIN })
 		try {
 			await authFetch.delete(`messages/${messageId}`)
+			dispatch({ type: DELETE_MESSAGE_SUCCESS })
 		} catch (error) {
 			if (error.response.status === 401) return
 			dispatch({
 				type: DELETE_MESSAGE_ERROR,
+				payload: { msg: error.response.data.msg },
+			})
+		}
+		clearAlert()
+	}
+
+	//delete profile ADM
+	const deleteProfileAdm = async (profileId) => {
+		dispatch({ type: DELETE_PROFILE_ADM_BEGIN })
+		try {
+			await authFetch.delete(`profiles/${profileId}`)
+			dispatch({ type: DELETE_PROFILE_ADM_SUCCESS })
+		} catch (error) {
+			if (error.response.status === 401) return
+			dispatch({
+				type: DELETE_PROFILE_ADM_ERROR,
 				payload: { msg: error.response.data.msg },
 			})
 		}
@@ -590,6 +675,10 @@ const AppProvider = ({ children }) => {
 				getSingleMessageDetailOutbox,
 				updateUserAvatar,
 				deleteMessage,
+				getAllMessages,
+				setSingleMessageAdm,
+				getSingleMessageDetailAdm,
+				deleteProfileAdm,
 			}}
 		>
 			{children}

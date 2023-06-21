@@ -9,6 +9,8 @@ import SearchContainer from './SearchContainer'
 import FormRowDescription from './FormRowDescription'
 import FormRowNumber from './FormRowNumber'
 import ProfilesContainer from './ProfilesContainer'
+import PageButtonContainer from './PageBtnContainer'
+import NavbarAdmin from './NavbarAdmin'
 
 export {
 	Logo,
@@ -22,4 +24,6 @@ export {
 	FormRowDescription,
 	FormRowNumber,
 	ProfilesContainer,
+	PageButtonContainer,
+	NavbarAdmin,
 }

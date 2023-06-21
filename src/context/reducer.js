@@ -37,7 +37,17 @@ import {
 	OUTBOX_DETAIL_SUCCESS,
 	OUTBOX_DETAIL_ERROR,
 	DELETE_MESSAGE_BEGIN,
+	DELETE_MESSAGE_SUCCESS,
 	DELETE_MESSAGE_ERROR,
+	GET_ALL_MESSAGES_BEGIN,
+	GET_ALL_MESSAGES_SUCCESS,
+	SET_MESSAGE_ADM_DETAILS,
+	MESSAGE_DETAIL_ADM_BEGIN,
+	MESSAGE_DETAIL_ADM_SUCCESS,
+	MESSAGE_DETAIL_ADM_ERROR,
+	DELETE_PROFILE_ADM_BEGIN,
+	DELETE_PROFILE_ADM_ERROR,
+	DELETE_PROFILE_ADM_SUCCESS,
 } from './actions'
 import { initialState } from './appContext'
 
@@ -333,6 +343,24 @@ const reducer = (state, action) => {
 		}
 	}
 
+	//get all messages
+	if (action.type === GET_ALL_MESSAGES_BEGIN) {
+		return {
+			...state,
+			isLoading: true,
+			showAlert: false,
+		}
+	}
+	if (action.type === GET_ALL_MESSAGES_SUCCESS) {
+		return {
+			...state,
+			isLoading: false,
+			allMessages: action.payload.allMessages,
+			totalMessages: action.payload.totalMessages,
+			numOfPages: action.payload.numOfPages,
+		}
+	}
+
 	// Single Message
 	if (action.type === SET_MESSAGE_DETAILS) {
 		const message = state.userInboxMessages.find(
@@ -356,6 +384,38 @@ const reducer = (state, action) => {
 		}
 	}
 	if (action.type === MESSAGE_DETAIL_ERROR) {
+		return {
+			...state,
+			isLoading: false,
+			showAlert: true,
+			alertType: 'danger',
+			alertText: action.payload.msg,
+		}
+	}
+
+	//adm message detail
+	if (action.type === SET_MESSAGE_ADM_DETAILS) {
+		const message = state.allMessages.find(
+			(message) => message._id === action.payload.id
+		)
+		const { _id } = message
+		return {
+			...state,
+			messageDetailsId: _id,
+			messageDetails: message,
+		}
+	}
+	if (action.type === MESSAGE_DETAIL_ADM_BEGIN) {
+		return { ...state, isLoading: true, showAlert: false }
+	}
+	if (action.type === MESSAGE_DETAIL_ADM_SUCCESS) {
+		return {
+			...state,
+			isLoading: false,
+			messageDetails: action.payload.messageDetails,
+		}
+	}
+	if (action.type === MESSAGE_DETAIL_ADM_ERROR) {
 		return {
 			...state,
 			isLoading: false,
@@ -418,6 +478,41 @@ const reducer = (state, action) => {
 			showAlert: true,
 			alertType: 'danger',
 			alertText: action.payload.msg,
+		}
+	}
+	if (action.type === DELETE_MESSAGE_SUCCESS) {
+		return {
+			...state,
+			isLoading: false,
+			showAlert: false,
+		}
+	}
+
+	if (action.type === DELETE_PROFILE_ADM_BEGIN) {
+		return {
+			...state,
+			isLoading: true,
+			showAlert: true,
+			alertType: 'success',
+			alertText: 'Profil sedang dihapus... tunggu sebentar',
+		}
+	}
+	if (action.type === DELETE_PROFILE_ADM_ERROR) {
+		return {
+			...state,
+			isLoading: false,
+			showAlert: true,
+			alertType: 'danger',
+			alertText: action.payload.msg,
+		}
+	}
+	if (action.type === DELETE_PROFILE_ADM_SUCCESS) {
+		return {
+			...state,
+			isLoading: false,
+			showAlert: false,
+			allProfiles: [],
+			totalProfiles: 0,
 		}
 	}
 

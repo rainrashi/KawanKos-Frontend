@@ -15,6 +15,12 @@ const ProfilesContainer = () => {
 		search,
 		searchUserStatus,
 		searchUserGender,
+		searchUserJob,
+		searchUserMajor,
+		searchUserHomeTown,
+		searchUserReligion,
+		searchUserHasLocation,
+		searchUserLocationArea,
 		sort,
 		numOfPages,
 		totalProfiles,
@@ -22,7 +28,19 @@ const ProfilesContainer = () => {
 
 	useEffect(() => {
 		getProfiles()
-	}, [page, search, searchUserStatus, searchUserGender, sort])
+	}, [
+		page,
+		search,
+		searchUserStatus,
+		searchUserGender,
+		searchUserJob,
+		searchUserMajor,
+		searchUserHomeTown,
+		searchUserReligion,
+		searchUserHasLocation,
+		searchUserLocationArea,
+		sort,
+	])
 
 	if (isLoading) {
 		return <Loading center />
