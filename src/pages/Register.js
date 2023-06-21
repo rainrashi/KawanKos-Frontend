@@ -28,6 +28,7 @@ const initialState = {
 	userLocationPrice: 500000,
 	userBudget: 500000,
 	userDescription: '',
+	userLocationArea: '',
 }
 
 const Register = () => {
@@ -42,6 +43,7 @@ const Register = () => {
 		userStatusOptions,
 		userGenderOptions,
 		userReligionOptions,
+		userLocationAreaOptions,
 	} = useAppContext()
 	const toggleMember = () => {
 		setValues({ ...values, isMember: !values.isMember })
@@ -73,6 +75,7 @@ const Register = () => {
 			userHasLocation,
 			userLocation,
 			userLocationPrice,
+			userLocationArea,
 			userBudget,
 			userDescription,
 		} = values
@@ -125,6 +128,7 @@ const Register = () => {
 			userHasLocation,
 			userLocation,
 			userLocationPrice,
+			userLocationArea,
 		}
 		if (isMember) {
 			setupUser({
@@ -302,6 +306,17 @@ const Register = () => {
 						name='userLocation'
 						value={values.userLocation}
 						placeholder='Alamat kost kamu...'
+						handleChange={handleChange}
+					/>
+				)}
+				{/* HasLocation: Bagian Jakarta locationArea */}
+				{!values.isMember && values.userHasLocation && (
+					<FormRowSelect
+						placeholder='Area Kost'
+						labelText='Area Lokasi'
+						name='userLocationArea'
+						value={values.userLocationArea}
+						list={userLocationAreaOptions}
 						handleChange={handleChange}
 					/>
 				)}

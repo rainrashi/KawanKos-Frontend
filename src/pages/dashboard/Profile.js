@@ -23,6 +23,7 @@ const Profile = () => {
 		userGenderOptions,
 		userStatusOptions,
 		userReligionOptions,
+		userLocationAreaOptions,
 		updateUserFoundPartner,
 	} = useAppContext()
 
@@ -43,6 +44,7 @@ const Profile = () => {
 		userHasLocation: user?.userHasLocation,
 		userLocation: user?.userLocation,
 		userLocationPrice: user?.userLocationPrice,
+		userLocationArea: user?.userLocationArea,
 	})
 
 	// const [avatar, setAvatar] = useState(user?.userAvatar)
@@ -133,6 +135,7 @@ const Profile = () => {
 						labelText='Umur Anda'
 						value={formData.userAge}
 						handleChange={handleChange}
+						placeholder={formData.userAge}
 						min='18'
 						required
 					/>
@@ -226,12 +229,26 @@ const Profile = () => {
 							/>
 						)}
 						{formData.userHasLocation && (
+							<FormRowSelect
+								placeholder='Area Kost'
+								labelText='Area Lokasi'
+								name='userLocationArea'
+								value={formData.userLocationArea}
+								list={userLocationAreaOptions}
+								handleChange={handleChange}
+							/>
+						)}
+						{formData.userHasLocation && (
 							<FormRowNumber
 								labelText='Harga Kamar'
 								name='userLocationPrice'
 								value={formData.userLocationPrice}
 								handleChange={handleChange}
-								placeholder='Contoh: 10000000, perkalian 100000'
+								placeholder={
+									formData.userLocationPrice
+										? formData.userLocationPrice
+										: 'Contoh: 10000000, perkalian 100000'
+								}
 								step='100000'
 								min='100000'
 								required

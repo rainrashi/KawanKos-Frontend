@@ -20,6 +20,8 @@ const SearchContainer = () => {
 		userReligionOptions,
 		userHasLocationOptions,
 		searchUserHasLocation,
+		userLocationAreaOptions,
+		searchUserLocationArea,
 		clearFilters,
 		sort,
 		sortOptions,
@@ -124,12 +126,23 @@ const SearchContainer = () => {
 
 					{/* search by has place */}
 					<FormRowSelect
-						labelText='Sudah punya lokasi?'
+						labelText='Sudah punya kost?'
 						name='searchUserHasLocation'
 						value={searchUserHasLocation}
 						handleChange={handleSearch}
 						list={['semua', ...userHasLocationOptions]}
 					/>
+
+					{/* search by location area */}
+					{searchUserHasLocation === 'ya' && (
+						<FormRowSelect
+							labelText='Area Kost'
+							name='searchUserLocationArea'
+							value={searchUserLocationArea}
+							handleChange={handleSearch}
+							list={['semua', ...userLocationAreaOptions]}
+						/>
+					)}
 
 					{/* sort */}
 					<FormRowSelect

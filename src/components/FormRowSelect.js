@@ -4,6 +4,7 @@ import { BiMaleFemale } from 'react-icons/bi'
 import { BsStars } from 'react-icons/bs'
 import { GrSelect } from 'react-icons/gr'
 import { RxCaretSort } from 'react-icons/rx'
+import { IoMdLocate } from 'react-icons/io'
 
 const FormRowSelect = ({
 	labelText,
@@ -18,10 +19,12 @@ const FormRowSelect = ({
 		userGender: <BiMaleFemale />,
 		userReligion: <BsStars />,
 		userStatus: <MdOutlineHomeWork />,
+		userLocationArea: <IoMdLocate />,
 		searchUserGender: <BiMaleFemale />,
 		searchUserReligion: <BsStars />,
 		searchUserStatus: <MdOutlineHomeWork />,
 		searchUserHasLocation: <MdShareLocation />,
+		searchUserLocationArea: <IoMdLocate />,
 		sort: <RxCaretSort />,
 	}
 

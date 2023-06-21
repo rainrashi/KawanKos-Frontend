@@ -71,6 +71,7 @@ const initialState = {
 	searchUserGender: 'semua',
 	searchUserReligion: 'semua',
 	searchUserHasLocation: 'semua',
+	searchUserLocationArea: 'semua',
 	sort: 'Pengguna terbaru',
 	sortOptions: [
 		'Pengguna terbaru',
@@ -97,6 +98,13 @@ const initialState = {
 	],
 	userReligion: 'Lainnya',
 	userHasLocationOptions: ['ya', 'tidak'],
+	userLocationAreaOptions: [
+		'Jakarta Utara',
+		'Jakarta Timur',
+		'Jakarta Selatan',
+		'Jakarta Barat',
+		'Jakarta Pusat',
+	],
 	// * Profile details
 	profileDetailId: '',
 	profileDetails: [],
@@ -279,6 +287,7 @@ const AppProvider = ({ children }) => {
 			searchUserGender,
 			searchUserReligion,
 			searchUserHasLocation,
+			searchUserLocationArea,
 			sort,
 		} = state
 
@@ -288,6 +297,7 @@ const AppProvider = ({ children }) => {
 			userGender: searchUserGender,
 			userReligion: searchUserReligion,
 			userHasLocation: searchUserHasLocation,
+			userLocationArea: searchUserLocationArea,
 			sort,
 		}
 

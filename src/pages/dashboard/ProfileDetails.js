@@ -14,6 +14,7 @@ import {
 import { BiCalendarStar, BiMaleFemale } from 'react-icons/bi'
 import { BsStars } from 'react-icons/bs'
 import { SiHomeadvisor } from 'react-icons/si'
+import { IoMdLocate } from 'react-icons/io'
 import { IoPricetag, IoSchool } from 'react-icons/io5'
 import { HiOfficeBuilding } from 'react-icons/hi'
 import { FaRegMoneyBillAlt } from 'react-icons/fa'
@@ -51,6 +52,7 @@ const ProfileDetails = () => {
 		userHasLocation,
 		userLocation,
 		userLocationPrice,
+		userLocationArea,
 	} = detailState
 
 	return (
@@ -184,6 +186,16 @@ const ProfileDetails = () => {
 										<b>Lokasi Indekos: </b>
 									</label>
 									<>{userLocation}</>
+								</div>
+							</div>
+
+							<div className='deets-row-container'>
+								<IoMdLocate />
+								<div className='deets-content'>
+									<label>
+										<b>Area Kost: </b>
+									</label>
+									<>{userLocationArea}</>
 								</div>
 							</div>
 

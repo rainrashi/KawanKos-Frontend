@@ -425,14 +425,16 @@ const reducer = (state, action) => {
 	if (action.type === CLEAR_FILTERS) {
 		return {
 			...state,
+			sort: 'Pengguna terbaru',
 			search: '',
-			searchUserMajor: '',
 			searchUserJob: '',
+			searchUserMajor: '',
 			searchUserHomeTown: '',
 			searchUserStatus: 'semua',
-			searchUserReligion: 'semua',
 			searchUserGender: 'semua',
-			sort: 'Pengguna terbaru',
+			searchUserReligion: 'semua',
+			searchUserHasLocation: 'semua',
+			searchUserLocationArea: 'semua',
 		}
 	}
 
